@@ -25,8 +25,9 @@ from scripts.performance.utils import get_comm_overlap_callback_idx
 def model() -> run.Config[pl.LightningModule]:
     config = run.Config(
         MistralConfig7B,
+        seq_length=8192,
         gradient_accumulation_fusion=True,
-        init_model_with_meta_device=False,
+        init_model_with_meta_device=True,
         use_transformer_engine_full_layer_spec=False,
         share_embeddings_and_output_weights=True,
         deallocate_pipeline_outputs=False,
@@ -56,6 +57,16 @@ def trainer(
         gradient_as_bucket_view=True,
         ckpt_async_save=True,
         ckpt_parallel_load=True,
+        ddp=run.Config(
+            DistributedDataParallelConfig,
+            check_for_nan_in_grad=True,
+            grad_reduce_in_fp32=True,
+            overlap_grad_reduce=True,
+            overlap_param_gather=True,
+            average_in_collective=True,
+            data_parallel_sharding_strategy="optim"
+        ),
+        fsdp="megatron",
         progress_interval=5,
     )
 
@@ -133,6 +144,8 @@ def pretrain_recipe(
         cp_size=context_parallelism,
         vp_size=None,
         ep_size=1,
+        use_fsdp_double_buffer=True, # (check)
+        use_mcore_fsdp=True,
     )
 
     return recipe
@@ -149,7 +162,7 @@ def pretrain_performance_optimizations(recipe: run.Partial) -> run.Partial:
     mcomm_overlap_callback = run.Config(
         MegatronCommOverlapCallback,
         tp_comm_overlap=True,
-        #tp_comm_overlap_cfg=userbuffers_bf16_h100_h12288_tp4_mbs1_seqlen2048,
+        tp_comm_overlap_cfg=userbuffers_bf16_h100_h12288_tp4_mbs1_seqlen2048,
         defer_embedding_wgrad_compute=True,
         wgrad_deferral_limit=50,
         # 'overlap_param_gather_with_optimizer_step' is set automatically. Added here for user's knowledge
@@ -184,7 +197,7 @@ def run_pretraining():
     recipe = pretrain_recipe(
         global_batch_size=4,
         micro_batch_size=1,
-        tensor_parallelism=4,
+        tensor_parallelism=2,
         pipeline_parallelism=1,
         context_parallelism=1,
         sequence_parallelism=True,
