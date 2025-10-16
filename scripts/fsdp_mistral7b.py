@@ -120,8 +120,8 @@ def pretrain_recipe(
         ),
         data=run.Config(
             PreTrainingDataModule,
-            paths=["/root/dataset/openwebtext"],
-            seq_length=2048,
+            paths=["/root/nemo/dataset/openwebtext"],
+            seq_length=8192,
             global_batch_size=global_batch_size,
             micro_batch_size=micro_batch_size,
         ),
