@@ -161,7 +161,7 @@ def pretrain_performance_optimizations(recipe: run.Partial) -> run.Partial:
     )
     mcomm_overlap_callback = run.Config(
         MegatronCommOverlapCallback,
-        tp_comm_overlap=True,
+        tp_comm_overlap=False,
         tp_comm_overlap_cfg=userbuffers_bf16_h100_h12288_tp4_mbs1_seqlen2048,
         defer_embedding_wgrad_compute=True,
         wgrad_deferral_limit=50,
@@ -194,15 +194,21 @@ def local_executor_torchrun(nodes: int = 1, devices: int = 4) -> run.LocalExecut
     return executor
 
 def run_pretraining():
+    tensor_parallelism=1,
+    pipeline_parallelism=1,
+    context_parallelism=1,
+    data_parallelism = 8 / tensor_parallelism / pipeline_parallelism / context_parallelism
+    micro_batch_size = 2
+    global_batch_size = data_parallelism * micro_batch_size
     recipe = pretrain_recipe(
-        global_batch_size=4,
-        micro_batch_size=1,
-        tensor_parallelism=2,
+        global_batch_size=global_batch_size,
+        micro_batch_size=micro_batch_size,
+        tensor_parallelism=1,
         pipeline_parallelism=1,
         context_parallelism=1,
         sequence_parallelism=True,
         num_nodes=1,
-        num_gpus_per_node=4,
+        num_gpus_per_node=8,
         max_steps=20, # Setting a small value for the quickstart
     )
 
