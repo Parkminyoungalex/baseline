@@ -26,7 +26,7 @@ def model() -> run.Config[pl.LightningModule]:
     config = run.Config(
         MistralConfig7B,
         gradient_accumulation_fusion=True,
-        init_model_with_meta_device=False,
+        init_model_with_meta_device=True,
         use_transformer_engine_full_layer_spec=False,
         share_embeddings_and_output_weights=True,
         deallocate_pipeline_outputs=False,
@@ -63,6 +63,7 @@ def trainer(
             overlap_grad_reduce=True,
             overlap_param_gather=True,
             average_in_collective=True,
+            data_parallel_sharding_strategy="optim"
         ),
         fsdp="megatron",
         progress_interval=5,
@@ -82,6 +83,7 @@ def trainer(
         plugins=bf16_mixed(),
         strategy=strategy,
         use_distributed_sampler=False,
+        enable_checkpointing=False,
         val_check_interval=2000,
     )
 
@@ -158,8 +160,8 @@ def pretrain_performance_optimizations(recipe: run.Partial) -> run.Partial:
     )
     mcomm_overlap_callback = run.Config(
         MegatronCommOverlapCallback,
-        tp_comm_overlap=False,
-        #tp_comm_overlap_cfg=userbuffers_bf16_h100_h12288_tp4_mbs1_seqlen2048,
+        tp_comm_overlap=True,
+        tp_comm_overlap_cfg=userbuffers_bf16_h100_h12288_tp4_mbs1_seqlen2048,
         defer_embedding_wgrad_compute=True,
         wgrad_deferral_limit=50,
         # 'overlap_param_gather_with_optimizer_step' is set automatically. Added here for user's knowledge
@@ -194,7 +196,7 @@ def run_pretraining():
     recipe = pretrain_recipe(
         global_batch_size=4,
         micro_batch_size=1,
-        tensor_parallelism=1,
+        tensor_parallelism=2,
         pipeline_parallelism=1,
         context_parallelism=1,
         sequence_parallelism=True,
@@ -204,7 +206,7 @@ def run_pretraining():
     )
 
     executor = local_executor_torchrun(nodes=recipe.trainer.num_nodes, devices=recipe.trainer.devices)
-    run.run(recipe, executor=executor, name="gpt_7b_pretraining")
+    run.run(recipe, executor=executor, name="mistral_7b_pretraining")
 
 # This condition is necessary for the script to be compatible with Python's multiprocessing module.
 if __name__ == "__main__":

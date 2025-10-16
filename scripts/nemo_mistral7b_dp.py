@@ -10,7 +10,7 @@ from nemo import lightning as nl
 from nemo.collections import llm
 from nemo.collections.llm.api import pretrain
 from nemo.collections.llm.gpt.data import PreTrainingDataModule
-from nemo.collections.llm.gpt.model import GPTConfig7B, GPTModel
+from nemo.collections.llm.gpt.model import GPTConfig7B, MistralConfig7B, GPTModel, MistralModel
 from nemo.collections.llm.recipes.optim.adam import distributed_fused_adam_with_cosine_annealing
 from nemo.collections.llm.recipes.precision.mixed_precision import bf16_mixed
 from nemo.collections.llm.recipes.tp_overlap_configs.userbuffers import (
@@ -22,22 +22,16 @@ from nemo.utils.exp_manager import TimingCallback
 from scripts.performance.helpers import set_primary_perf_configs, set_mcore_fsdp_configs
 from scripts.performance.utils import get_comm_overlap_callback_idx
 
-from nemo_run.cli.config import ConfigSerializer
-
-from omegaconf import OmegaConf
-from hydra.utils import instantiate
-import fiddle as fdl
-
 def model() -> run.Config[pl.LightningModule]:
     config = run.Config(
-        GPTConfig7B,
+        MistralConfig7B,
         gradient_accumulation_fusion=True,
         init_model_with_meta_device=False,
         use_transformer_engine_full_layer_spec=False,
-        share_embeddings_and_output_weights=False,
+        share_embeddings_and_output_weights=True,
         deallocate_pipeline_outputs=False,
     )
-    return run.Config(GPTModel, config=config)
+    return run.Config(MistralModel, config=config)
 
 def trainer(
     tensor_parallelism: int = 2,
@@ -55,22 +49,13 @@ def trainer(
         nl.MegatronStrategy,
         tensor_model_parallel_size=tensor_parallelism,
         pipeline_model_parallel_size=pipeline_parallelism,
-        pipeline_dtype=None,
+        pipeline_dtype=pipeline_parallelism_type,
         virtual_pipeline_model_parallel_size=virtual_pipeline_parallelism,
-        context_parallel_size=context_parallelism,
-        sequence_parallel=sequence_parallelism,
+        context_parallel_size=context_parallelism, # attention에서 activation을 sequence 방향으로 
+        sequence_parallel=sequence_parallelism, # tp랑 같이 쓰이는데 tp 키면 자동으로 켜져야하지않을까
         gradient_as_bucket_view=True,
         ckpt_async_save=True,
         ckpt_parallel_load=True,
-        ddp=run.Config(
-            DistributedDataParallelConfig,
-            check_for_nan_in_grad=True,
-            grad_reduce_in_fp32=True,
-            overlap_grad_reduce=True,
-            overlap_param_gather=True,
-            average_in_collective=True,
-        ),
-        fsdp="megatron",
         progress_interval=5,
     )
 
@@ -94,12 +79,13 @@ def trainer(
 
     return trainer
 
-@run.cli.factory(target=pretrain, name="gpt2_7b")
 def pretrain_recipe(
     global_batch_size=4,
     micro_batch_size=1,
-    tensor_parallelism: int = 2,
-    pipeline_parallelism: int = 2,
+    tensor_parallelism: int = 1,
+    pipeline_parallelism: int = 4,
+    context_parallelism: int = 1,
+    sequence_parallelism: bool = True,
     num_nodes: int = 1,
     num_gpus_per_node: int = 4,
     performance_mode: bool = True,
@@ -110,10 +96,14 @@ def pretrain_recipe(
         fn,
         model=model(),
         trainer=trainer(
-            num_nodes=num_nodes,
-            num_gpus_per_node=num_gpus_per_node,
             tensor_parallelism=tensor_parallelism,
             pipeline_parallelism=pipeline_parallelism,
+            pipeline_parallelism_type=torch.bfloat16,
+            virtual_pipeline_parallelism=None,
+            context_parallelism=context_parallelism,
+            sequence_parallelism=sequence_parallelism,
+            num_nodes=num_nodes,
+            num_gpus_per_node=num_gpus_per_node,
             max_steps=max_steps,
             callbacks=[run.Config(TimingCallback, log_tokens_per_sec=True)],
         ),
@@ -140,11 +130,9 @@ def pretrain_recipe(
         max_steps=max_steps,
         tp_size=tensor_parallelism,
         pp_size=pipeline_parallelism,
-        cp_size=4,
+        cp_size=context_parallelism,
         vp_size=None,
         ep_size=1,
-        use_fsdp_double_buffer=False,
-        use_mcore_fsdp=True,
     )
 
     return recipe
@@ -160,7 +148,7 @@ def pretrain_performance_optimizations(recipe: run.Partial) -> run.Partial:
     )
     mcomm_overlap_callback = run.Config(
         MegatronCommOverlapCallback,
-        tp_comm_overlap=False,
+        tp_comm_overlap=True,
         #tp_comm_overlap_cfg=userbuffers_bf16_h100_h12288_tp4_mbs1_seqlen2048,
         defer_embedding_wgrad_compute=True,
         wgrad_deferral_limit=50,
@@ -194,15 +182,19 @@ def local_executor_torchrun(nodes: int = 1, devices: int = 4) -> run.LocalExecut
 
 def run_pretraining():
     recipe = pretrain_recipe(
-        tensor_parallelism=1,
+        global_batch_size=4,
+        micro_batch_size=1,
+        tensor_parallelism=4,
         pipeline_parallelism=1,
+        context_parallelism=1,
+        sequence_parallelism=True,
         num_nodes=1,
         num_gpus_per_node=4,
         max_steps=20, # Setting a small value for the quickstart
     )
 
     executor = local_executor_torchrun(nodes=recipe.trainer.num_nodes, devices=recipe.trainer.devices)
-    run.run(recipe, executor=executor, name="gpt_7b_pretraining")
+    run.run(recipe, executor=executor, name="mistral_7b_pretraining")
 
 # This condition is necessary for the script to be compatible with Python's multiprocessing module.
 if __name__ == "__main__":
