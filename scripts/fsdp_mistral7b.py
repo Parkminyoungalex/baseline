@@ -194,9 +194,9 @@ def local_executor_torchrun(nodes: int = 1, devices: int = 4) -> run.LocalExecut
     return executor
 
 def run_pretraining():
-    tensor_parallelism=1,
-    pipeline_parallelism=1,
-    context_parallelism=1,
+    tensor_parallelism = 1
+    pipeline_parallelism = 1
+    context_parallelism = 1
     data_parallelism = 8 / tensor_parallelism / pipeline_parallelism / context_parallelism
     micro_batch_size = 2
     global_batch_size = data_parallelism * micro_batch_size
