@@ -76,8 +76,6 @@ def trainer(
         accumulate_grad_batches=1,
         callbacks=callbacks,
         devices=num_gpus_per_node,
-        limit_test_batches=50,
-        limit_val_batches=32,
         log_every_n_steps=10,
         max_steps=max_steps,
         num_nodes=num_nodes,
@@ -194,16 +192,16 @@ def local_executor_torchrun(nodes: int = 1, devices: int = 4) -> run.LocalExecut
     return executor
 
 def run_pretraining():
-    tensor_parallelism = (1, 1, 1)
-    data_parallelism = int(8 / tensor_parallelism / pipeline_parallelism / context_parallelism)
+    tp, pp, cp = (1, 1, 1)
+    dp = int(8 / tp / pp / cp)
     micro_batch_size = 2
-    global_batch_size = data_parallelism * micro_batch_size
+    global_batch_size = dp * micro_batch_size
     recipe = pretrain_recipe(
         global_batch_size=global_batch_size,
         micro_batch_size=micro_batch_size,
-        tensor_parallelism=1,
-        pipeline_parallelism=1,
-        context_parallelism=1,
+        tensor_parallelism=tp,
+        pipeline_parallelism=pp,
+        context_parallelism=cp,
         sequence_parallelism=True,
         num_nodes=1,
         num_gpus_per_node=8,
