@@ -1,4 +1,5 @@
 from typing import Callable, Optional
+import argparse
 
 import lightning.pytorch as pl
 from lightning.pytorch.callbacks.callback import Callback
@@ -76,7 +77,7 @@ def trainer(
         accumulate_grad_batches=1,
         callbacks=callbacks,
         devices=num_gpus_per_node,
-        log_every_n_steps=10,
+        log_every_n_steps=1,
         max_steps=max_steps,
         num_nodes=num_nodes,
         plugins=bf16_mixed(),
@@ -93,6 +94,7 @@ def pretrain_recipe(
     micro_batch_size=1,
     tensor_parallelism: int = 1,
     pipeline_parallelism: int = 4,
+    virtual_pipeline_parallelism: int = 1,
     context_parallelism: int = 1,
     sequence_parallelism: bool = True,
     num_nodes: int = 1,
@@ -108,7 +110,7 @@ def pretrain_recipe(
             tensor_parallelism=tensor_parallelism,
             pipeline_parallelism=pipeline_parallelism,
             pipeline_parallelism_type=torch.bfloat16,
-            virtual_pipeline_parallelism=None,
+            virtual_pipeline_parallelism=virtual_pipeline_parallelism,
             context_parallelism=context_parallelism,
             sequence_parallelism=sequence_parallelism,
             num_nodes=num_nodes,
@@ -118,7 +120,7 @@ def pretrain_recipe(
         ),
         data=run.Config(
             PreTrainingDataModule,
-            paths=["/root/nemo/dataset/openwebtext"],
+            paths=["/root/dataset/openwebtext"],
             seq_length=8192,
             global_batch_size=global_batch_size,
             micro_batch_size=micro_batch_size,
@@ -140,7 +142,7 @@ def pretrain_recipe(
         tp_size=tensor_parallelism,
         pp_size=pipeline_parallelism,
         cp_size=context_parallelism,
-        vp_size=None,
+        vp_size=virtual_pipeline_parallelism,
         ep_size=1,
         use_fsdp_double_buffer=True, # (check)
         use_mcore_fsdp=True,
@@ -191,26 +193,37 @@ def local_executor_torchrun(nodes: int = 1, devices: int = 4) -> run.LocalExecut
 
     return executor
 
-def run_pretraining():
-    tp, pp, cp = (1, 1, 1)
-    dp = int(8 / tp / pp / cp)
-    micro_batch_size = 2
-    global_batch_size = dp * micro_batch_size
+def run_pretraining(args):
+    tp, pp, cp, vp = args.tp, args.pp, args.cp, args.vp
+    num_gpus_per_node = 8
+    dp = int(num_gpus_per_node / tp / pp / max(cp, 1))
     recipe = pretrain_recipe(
-        global_batch_size=global_batch_size,
-        micro_batch_size=micro_batch_size,
+        global_batch_size=args.global_batch_size,
+        micro_batch_size=args.micro_batch_size,
         tensor_parallelism=tp,
         pipeline_parallelism=pp,
         context_parallelism=cp,
-        sequence_parallelism=True,
+        virtual_pipeline_parallelism=vp,
+        sequence_parallelism=args.sp,
         num_nodes=1,
-        num_gpus_per_node=8,
-        max_steps=20, # Setting a small value for the quickstart
+        num_gpus_per_node=num_gpus_per_node,
+        max_steps=20,
     )
 
     executor = local_executor_torchrun(nodes=recipe.trainer.num_nodes, devices=recipe.trainer.devices)
     run.run(recipe, executor=executor, name="mistral_7b_pretraining")
 
+
 # This condition is necessary for the script to be compatible with Python's multiprocessing module.
 if __name__ == "__main__":
-    run_pretraining()
+    parser = argparse.ArgumentParser(description="Mistral 7B Pretraining Launcher (FSDP/DP Compatible)")
+    parser.add_argument("--tp", type=int, default=1, help="Tensor parallelism size")
+    parser.add_argument("--pp", type=int, default=1, help="Pipeline parallelism size")
+    parser.add_argument("--cp", type=int, default=1, help="Context parallelism size")
+    parser.add_argument("--vp", type=int, default=None, help="Virtual pipeline parallelism size")
+    parser.add_argument("--sp", action="store_true", help="Enable sequence parallelism")
+    parser.add_argument("--micro_batch_size", type=int, default=1, help="Micro batch size")
+    parser.add_argument("--global_batch_size", type=int, default=4, help="Global batch size")
+    args = parser.parse_args()
+
+    run_pretraining(args)
