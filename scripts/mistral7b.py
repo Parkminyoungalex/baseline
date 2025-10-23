@@ -1,0 +1,257 @@
+from typing import Callable, Optional
+import argparse
+
+import lightning.pytorch as pl
+from lightning.pytorch.callbacks.callback import Callback
+from megatron.core.distributed import DistributedDataParallelConfig
+import torch
+
+import nemo_run as run
+from nemo import lightning as nl
+from nemo.collections import llm
+from nemo.collections.llm.api import pretrain
+from nemo.collections.llm.gpt.data import PreTrainingDataModule
+from nemo.collections.llm.gpt.model import GPTConfig7B, MistralConfig7B, GPTModel, MistralModel
+from nemo.collections.llm.recipes.optim.adam import distributed_fused_adam_with_cosine_annealing
+from nemo.collections.llm.recipes.precision.mixed_precision import bf16_mixed
+from nemo.collections.llm.recipes.tp_overlap_configs.userbuffers import (
+    userbuffers_a100,
+)
+from nemo.lightning.pytorch.callbacks.garbage_collection import GarbageCollectionCallback
+from nemo.lightning.pytorch.callbacks.megatron_comm_overlap import MegatronCommOverlapCallback
+from nemo.utils.exp_manager import TimingCallback
+from scripts.performance.helpers import set_primary_perf_configs, set_mcore_fsdp_configs
+from scripts.performance.utils import get_comm_overlap_callback_idx
+
+def model(recompute_method) -> run.Config[pl.LightningModule]:
+    config = run.Config(
+        MistralConfig7B,
+        seq_length=8192,
+        gradient_accumulation_fusion=True,
+        init_model_with_meta_device=False,
+        use_transformer_engine_full_layer_spec=False,
+        share_embeddings_and_output_weights=True,
+        deallocate_pipeline_outputs=True,
+        recompute_method=recompute_method
+    )
+    return run.Config(MistralModel, config=config)
+
+def trainer(
+    tensor_parallelism: int = 2,
+    pipeline_parallelism: int = 2,
+    pipeline_parallelism_type: Optional[torch.dtype] = torch.bfloat16,
+    virtual_pipeline_parallelism: Optional[int] = None,
+    context_parallelism: int = None,
+    sequence_parallelism: bool = True,
+    is_fsdp: bool = False,
+    num_nodes: int = 64,
+    num_gpus_per_node: int = 8,
+    max_steps: int = 1168251,
+    callbacks: Optional[list[run.Config[Callback]]] = None,
+) -> run.Config[nl.Trainer]:
+    strategy = run.Config(
+        nl.MegatronStrategy,
+        tensor_model_parallel_size=tensor_parallelism,
+        pipeline_model_parallel_size=pipeline_parallelism,
+        pipeline_dtype=pipeline_parallelism_type,
+        virtual_pipeline_model_parallel_size=virtual_pipeline_parallelism,
+        context_parallel_size=context_parallelism,
+        sequence_parallel=sequence_parallelism,
+        gradient_as_bucket_view=True,
+        ckpt_async_save=True,
+        ckpt_parallel_load=True,
+        progress_interval=10,
+    )
+
+    if is_fsdp:
+        strategy.ddp=run.Config(
+            DistributedDataParallelConfig,
+            check_for_nan_in_grad=True,
+            grad_reduce_in_fp32=True,
+            overlap_grad_reduce=True,
+            overlap_param_gather=True,
+            average_in_collective=True,
+            data_parallel_sharding_strategy="optim"
+        )
+        strategy.fsdp="megatron"
+
+    trainer = run.Config(
+        nl.Trainer,
+        accelerator="gpu",
+        accumulate_grad_batches=1,
+        callbacks=callbacks,
+        devices=num_gpus_per_node,
+        log_every_n_steps=1,
+        max_steps=max_steps,
+        num_nodes=num_nodes,
+        plugins=bf16_mixed(),
+        strategy=strategy,
+        use_distributed_sampler=False,
+        enable_checkpointing=False,
+        val_check_interval=2000,
+    )
+
+    return trainer
+
+def pretrain_recipe(
+    global_batch_size=4,
+    micro_batch_size=1,
+    tensor_parallelism: int = 1,
+    pipeline_parallelism: int = 4,
+    virtual_pipeline_parallelism: int = 1,
+    context_parallelism: int = 1,
+    sequence_parallelism: bool = True,
+    recompute_method: str = None,
+    is_fsdp: bool = False,
+    num_nodes: int = 1,
+    num_gpus_per_node: int = 4,
+    performance_mode: bool = True,
+    max_steps: int = 100,
+    fn: Callable = pretrain,
+) -> run.Partial:
+    recipe = run.Partial(
+        fn,
+        model=model(recompute_method),
+        trainer=trainer(
+            tensor_parallelism=tensor_parallelism,
+            pipeline_parallelism=pipeline_parallelism,
+            pipeline_parallelism_type=torch.bfloat16,
+            virtual_pipeline_parallelism=virtual_pipeline_parallelism,
+            context_parallelism=context_parallelism,
+            sequence_parallelism=sequence_parallelism,
+            is_fsdp=is_fsdp,
+            num_nodes=num_nodes,
+            num_gpus_per_node=num_gpus_per_node,
+            max_steps=max_steps,
+            callbacks=[run.Config(TimingCallback, log_tokens_per_sec=True)],
+        ),
+        data=run.Config(
+            PreTrainingDataModule,
+            paths=["/root/dataset/openwebtext"],
+            seq_length=8192,
+            global_batch_size=global_batch_size,
+            micro_batch_size=micro_batch_size,
+        ),
+        optim=distributed_fused_adam_with_cosine_annealing(max_lr=0.9e-4),
+    )
+
+    if performance_mode:
+        recipe = pretrain_performance_optimizations(recipe)
+
+    use_fsdp_double_buffer=True if is_fsdp else None
+    use_mcore_fsdp=True if is_fsdp else None
+    recipe = set_primary_perf_configs(
+        recipe,
+        task="pretrain",
+        num_nodes=num_nodes,
+        num_gpus_per_node=num_gpus_per_node,
+        mbs=micro_batch_size,
+        gbs=global_batch_size,
+        max_steps=max_steps,
+        tp_size=tensor_parallelism,
+        pp_size=pipeline_parallelism,
+        cp_size=context_parallelism,
+        vp_size=virtual_pipeline_parallelism,
+        ep_size=1,
+        use_fsdp_double_buffer=use_fsdp_double_buffer,
+        use_mcore_fsdp=use_mcore_fsdp
+    )
+
+    return recipe
+
+def pretrain_performance_optimizations(recipe: run.Partial) -> run.Partial:
+    if not recipe.trainer.callbacks:
+        recipe.trainer.callbacks = []
+
+    garbage_collection_callback = run.Config(
+        GarbageCollectionCallback,
+        gc_interval_train=100,
+        gc_interval_val=100,
+    )
+    mcomm_overlap_callback = run.Config(
+        MegatronCommOverlapCallback,
+        tp_comm_overlap=False,
+        tp_comm_overlap_cfg=userbuffers_a100,
+#        overlap_p2p_comm=True,
+#        batch_p2p_comm=False,
+        defer_embedding_wgrad_compute=True,
+        wgrad_deferral_limit=50,
+        # 'overlap_param_gather_with_optimizer_step' is set automatically. Added here for user's knowledge
+        overlap_param_gather_with_optimizer_step=False,  # Currently disabled due to an issue with checkpointing
+    )
+    recipe.trainer.callbacks.extend(
+        [
+            garbage_collection_callback,
+            mcomm_overlap_callback,
+        ]
+    )
+
+    recipe.trainer.plugins.grad_reduce_in_fp32 = False
+    recipe.optim.config.use_precision_aware_optimizer = False
+
+    return recipe
+
+def local_executor_torchrun(nodes: int = 1, devices: int = 4) -> run.LocalExecutor:
+    # Env vars for jobs are configured here
+    env_vars = {
+        "TORCH_NCCL_AVOID_RECORD_STREAMS": "1",
+        "NCCL_NVLS_ENABLE": "0",
+    }
+
+    executor = run.LocalExecutor(ntasks_per_node=devices, launcher="torchrun", env_vars=env_vars)
+
+    return executor
+
+def run_pretraining(args):
+    num_gpus_per_node = 4
+    recipe = pretrain_recipe(
+        global_batch_size=args.global_batch_size,
+        micro_batch_size=args.micro_batch_size,
+        tensor_parallelism=args.tp,
+        pipeline_parallelism=args.pp,
+        context_parallelism=args.cp,
+        virtual_pipeline_parallelism=args.vp,
+        sequence_parallelism=args.sp,
+        is_fsdp=args.is_fsdp,
+        recompute_method=args.recompute_method,
+        num_nodes=1,
+        num_gpus_per_node=num_gpus_per_node,
+        max_steps=20,
+    )
+
+    executor = local_executor_torchrun(nodes=recipe.trainer.num_nodes, devices=recipe.trainer.devices)
+    run.run(recipe, executor=executor, name="mistral_7b_pretraining")
+
+
+# This condition is necessary for the script to be compatible with Python's multiprocessing module.
+if __name__ == "__main__":
+    parser = argparse.ArgumentParser(description="Mistral 7B Pretraining Launcher (FSDP/DP Compatible)")
+    parser.add_argument("--tp", type=int, default=1, help="Tensor parallelism size")
+    parser.add_argument("--sp", action="store_true", help="Enable sequence parallelism")
+    parser.add_argument("--pp", type=int, default=1, help="Pipeline parallelism size")
+    parser.add_argument("--vp", type=int, default=None, help="Virtual pipeline parallelism size")
+    parser.add_argument("--cp", type=int, default=1, help="Context parallelism size")
+    parser.add_argument("--rc", action="store_true", help="Enable activation recomputation")
+    parser.add_argument("--fsdp", action="store_true", help="Enable fsdp")
+    parser.add_argument("--micro_batch_size", type=int, default=1, help="Micro batch size")
+    parser.add_argument("--global_batch_size", type=int, default=4, help="Global batch size")
+    parser.add_argument("--num_gpus_per_node", type=int, default=4, help="Number of GPU")
+
+    args = parser.parse_args()
+    args.recompute_method = "full" if args.rc else None
+    args.is_fsdp = args.fsdp
+    args.dp = int(args.num_gpus_per_node / args.tp / args.pp / max(args.cp, 1))
+
+    print("\n=== Parallel Configuration Summary ===")
+    print(f"DP:                        {args.dp} {'(FSDP Enabled)' if args.is_fsdp else ''}")
+    print(f"TP:                        {args.tp}")
+    print(f"SP:                        {'Enabled' if args.sp else 'Disabled'}")
+    print(f"PP:                        {args.pp}")
+    print(f"VP:                        {args.vp if args.vp is not None else 'None'}")
+    print(f"CP:                        {args.cp}")
+    print(f"Activation Recomputation:  {'Enabled' if args.rc else 'Disabled'}")
+    print(f"Micro Batch Size:          {args.micro_batch_size}")
+    print(f"Global Batch Size:         {args.global_batch_size}")
+    print("======================================\n")
+    
+    run_pretraining(args)
