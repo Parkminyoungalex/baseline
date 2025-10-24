@@ -1,4 +1,5 @@
 from typing import Callable, Optional
+import argparse
 
 import lightning.pytorch as pl
 from lightning.pytorch.callbacks.callback import Callback
@@ -87,6 +88,7 @@ def pretrain_recipe(
     pipeline_parallelism: int = 4,
     context_parallelism: int = 1,
     sequence_parallelism: bool = True,
+    virtual_pipeline_parallelism: int = 1,
     num_nodes: int = 1,
     num_gpus_per_node: int = 4,
     performance_mode: bool = True,
@@ -182,21 +184,20 @@ def local_executor_torchrun(nodes: int = 1, devices: int = 4) -> run.LocalExecut
     return executor
 
 def run_pretraining(args):
-    tp, pp, cp, vp = args.tp, args.pp, args.cp, args.vp
     num_gpus_per_node = 8
-    dp = int(num_gpus_per_node / tp / pp / max(cp, 1))
     recipe = pretrain_recipe(
         global_batch_size=args.global_batch_size,
         micro_batch_size=args.micro_batch_size,
-        tensor_parallelism=tp,
-        pipeline_parallelism=pp,
-        context_parallelism=cp,
-        virtual_pipeline_parallelism=vp,
+        tensor_parallelism=args.tp,
+        pipeline_parallelism=args.pp,
+        context_parallelism=args.cp,
+        virtual_pipeline_parallelism=args.vp,
         sequence_parallelism=args.sp,
         num_nodes=1,
         num_gpus_per_node=num_gpus_per_node,
         max_steps=20,
     )
+
 
     executor = local_executor_torchrun(nodes=recipe.trainer.num_nodes, devices=recipe.trainer.devices)
     run.run(recipe, executor=executor, name="mistral_7b_pretraining")
@@ -206,12 +207,33 @@ def run_pretraining(args):
 if __name__ == "__main__":
     parser = argparse.ArgumentParser(description="Mistral 7B Pretraining Launcher (FSDP/DP Compatible)")
     parser.add_argument("--tp", type=int, default=1, help="Tensor parallelism size")
-    parser.add_argument("--pp", type=int, default=1, help="Pipeline parallelism size")
-    parser.add_argument("--cp", type=int, default=1, help="Context parallelism size")
-    parser.add_argument("--vp", type=int, default=None, help="Virtual pipeline parallelism size")
     parser.add_argument("--sp", action="store_true", help="Enable sequence parallelism")
-    parser.add_argument("--micro_batch_size", type=int, default=1, help="Micro batch size")
-    parser.add_argument("--global_batch_size", type=int, default=4, help="Global batch size")
-    args = parser.parse_args()
+    parser.add_argument("--pp", type=int, default=1, help="Pipeline parallelism size")
+    parser.add_argument("--vp", type=int, default=None, help="Virtual pipeline parallelism size")
+    parser.add_argument("--cp", type=int, default=1, help="Context parallelism size")
+    parser.add_argument("--rc", action="store_true", help="Enable activation recomputation")
+    parser.add_argument("--fsdp", action="store_true", help="Enable fsdp")
+    parser.add_argument("--mbs", type=int, default=1, help="Micro batch size")
+    parser.add_argument("--gbs", type=int, default=4, help="Global batch size")
+    parser.add_argument("--num_gpus_per_node", type=int, default=8, help="Number of GPU")
 
+    args = parser.parse_args()
+    args.recompute_method = "full" if args.rc else None
+    args.is_fsdp = args.fsdp
+    args.dp = int(args.num_gpus_per_node / args.tp / args.pp / max(args.cp, 1))
+    args.micro_batch_size = args.mbs
+    args.global_batch_size = args.mbs * args.dp
+
+    print("\n=== Parallel Configuration Summary ===")
+    print(f"DP:                        {args.dp} {'(FSDP Enabled)' if args.is_fsdp else ''}")
+    print(f"TP:                        {args.tp}")
+    print(f"SP:                        {'Enabled' if args.sp else 'Disabled'}")
+    print(f"PP:                        {args.pp}")
+    print(f"VP:                        {args.vp if args.vp is not None else 'None'}")
+    print(f"CP:                        {args.cp}")
+    print(f"Activation Recomputation:  {'Enabled' if args.rc else 'Disabled'}")
+    print(f"Micro Batch Size:          {args.micro_batch_size}")
+    print(f"Global Batch Size:         {args.global_batch_size}")
+    print("======================================\n")
+    
     run_pretraining(args)

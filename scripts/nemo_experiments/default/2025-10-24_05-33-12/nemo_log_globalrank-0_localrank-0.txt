@@ -1,0 +1,26 @@
+[NeMo W 2025-10-24 05:33:09 nemo_logging:405] /usr/local/lib/python3.12/dist-packages/pydub/utils.py:170: RuntimeWarning: Couldn't find ffmpeg or avconv - defaulting to ffmpeg, but may not work
+      warn("Couldn't find ffmpeg or avconv - defaulting to ffmpeg, but may not work", RuntimeWarning)
+    
+[NeMo I 2025-10-24 05:33:11 nemo_logging:393] Getting Megatron tokenizer for pretrained model name: megatron-gpt-345m, custom vocab file: None, and merges file: None
+[NeMo I 2025-10-24 05:33:11 nemo_logging:393] Getting HuggingFace AutoTokenizer with pretrained_model_name: gpt2, vocab_file: /root/.cache/torch/megatron/megatron-gpt-345m_vocab,  merges_files: /root/.cache/torch/megatron/megatron-gpt-345m_merges, special_tokens_dict: {}, and use_fast: False
+[NeMo I 2025-10-24 05:33:12 nemo_logging:393] Experiments will be logged at /root/baseline/scripts/nemo_experiments/default/2025-10-24_05-33-12
+[NeMo W 2025-10-24 05:33:12 nemo_logging:405] "update_logger_directory" is True. Overwriting tensorboard logger "save_dir" to /root/baseline/scripts/nemo_experiments
+[NeMo I 2025-10-24 05:33:12 nemo_logging:393] Fixing mis-match between ddp-config & mcore-optimizer config
+[NeMo I 2025-10-24 05:33:12 nemo_logging:393] Rank 0 has data parallel group : [0]
+[NeMo I 2025-10-24 05:33:12 nemo_logging:393] Rank 0 has combined group of data parallel and context parallel : [0, 2, 4, 6]
+[NeMo I 2025-10-24 05:33:12 nemo_logging:393] All data parallel group ranks with context parallel combined: [[0, 2, 4, 6], [1, 3, 5, 7]]
+[NeMo I 2025-10-24 05:33:12 nemo_logging:393] Ranks 0 has data parallel rank: 0
+[NeMo I 2025-10-24 05:33:12 nemo_logging:393] Rank 0 has context parallel group: [0, 2, 4, 6]
+[NeMo I 2025-10-24 05:33:12 nemo_logging:393] All context parallel group ranks: [[0, 2, 4, 6], [1, 3, 5, 7]]
+[NeMo I 2025-10-24 05:33:12 nemo_logging:393] Ranks 0 has context parallel rank: 0
+[NeMo I 2025-10-24 05:33:12 nemo_logging:393] Rank 0 has model parallel group: [0, 1]
+[NeMo I 2025-10-24 05:33:12 nemo_logging:393] All model parallel group ranks: [[0, 1], [2, 3], [4, 5], [6, 7]]
+[NeMo I 2025-10-24 05:33:12 nemo_logging:393] Rank 0 has tensor model parallel group: [0, 1]
+[NeMo I 2025-10-24 05:33:12 nemo_logging:393] All tensor model parallel group ranks: [[0, 1], [2, 3], [4, 5], [6, 7]]
+[NeMo I 2025-10-24 05:33:12 nemo_logging:393] Rank 0 has tensor model parallel rank: 0
+[NeMo I 2025-10-24 05:33:12 nemo_logging:393] Rank 0 has pipeline model parallel group: [0]
+[NeMo I 2025-10-24 05:33:12 nemo_logging:393] Rank 0 has embedding group: [0]
+[NeMo I 2025-10-24 05:33:12 nemo_logging:393] All pipeline model parallel group ranks: [[0], [1], [2], [3], [4], [5], [6], [7]]
+[NeMo I 2025-10-24 05:33:12 nemo_logging:393] Rank 0 has pipeline model parallel rank 0
+[NeMo I 2025-10-24 05:33:12 nemo_logging:393] All embedding group ranks: [[0], [1], [2], [3], [4], [5], [6], [7]]
+[NeMo I 2025-10-24 05:33:12 nemo_logging:393] Rank 0 has embedding rank: 0

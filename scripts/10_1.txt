@@ -1,0 +1,466 @@
+
+=== Parallel Configuration Summary ===
+DP:                        1 
+TP:                        1
+SP:                        Disabled
+PP:                        1
+VP:                        None
+CP:                        8
+Activation Recomputation:  Disabled
+Micro Batch Size:          1
+Global Batch Size:         1
+======================================
+
+──────── Entering Experiment mistral_7b_pretraining with id: mistral_7b_pretraining_1761282803 ─────────
+[05:13:23] INFO     Log directory is:                                             local_scheduler.py:777
+                    /root/.nemo_run/experiments/mistral_7b_pretraining/mistral_7b                       
+                    _pretraining_1761282803/mistral_7b_pretraining                                      
+[05:13:23] Launching job mistral_7b_pretraining for experiment mistral_7b_pretraining  experiment.py:771
+           INFO     Log directory is:                                             local_scheduler.py:777
+                    /root/.nemo_run/experiments/mistral_7b_pretraining/mistral_7b                       
+                    _pretraining_1761282803/mistral_7b_pretraining                                      
+[05:13:24] INFO     Launched app:                                                        launcher.py:111
+                    local_persistent://nemo_run/mistral_7b_pretraining-knngtkhmqlnvm                    
+────────────────── Waiting for Experiment mistral_7b_pretraining_1761282803 to finish ──────────────────
+
+Experiment Status for mistral_7b_pretraining_1761282803
+
+Task 0: mistral_7b_pretraining
+- Status: RUNNING
+- Executor: LocalExecutor
+- Job id: mistral_7b_pretraining-knngtkhmqlnvm
+- Local Directory: /root/.nemo_run/experiments/mistral_7b_pretraining/mistral_7b_pretraining_1761282803/mistral_7b_pretraining
+
+           INFO     Waiting for job mistral_7b_pretraining-knngtkhmqlnvm to finish       launcher.py:131
+                    [log=True]...                                                                       
+retraining/0 I1024 05:13:25.936000 65367 torch/distributed/run.py:649] Using nproc_per_node=8.
+retraining/0 W1024 05:13:25.937000 65367 torch/distributed/run.py:766] 
+retraining/0 W1024 05:13:25.937000 65367 torch/distributed/run.py:766] *****************************************
+retraining/0 W1024 05:13:25.937000 65367 torch/distributed/run.py:766] Setting OMP_NUM_THREADS environment variable for each process to be 1 in default, to avoid your system being overloaded, please further tune the variable for optimal performance in your application as needed. 
+retraining/0 W1024 05:13:25.937000 65367 torch/distributed/run.py:766] *****************************************
+retraining/0 I1024 05:13:25.938000 65367 torch/distributed/launcher/api.py:195] Starting elastic_operator with launch configs:
+retraining/0 I1024 05:13:25.938000 65367 torch/distributed/launcher/api.py:195]   entrypoint       : nemo_run.core.runners.fdl_runner
+retraining/0 I1024 05:13:25.938000 65367 torch/distributed/launcher/api.py:195]   min_nodes        : 1
+retraining/0 I1024 05:13:25.938000 65367 torch/distributed/launcher/api.py:195]   max_nodes        : 1
+retraining/0 I1024 05:13:25.938000 65367 torch/distributed/launcher/api.py:195]   nproc_per_node   : 8
+retraining/0 I1024 05:13:25.938000 65367 torch/distributed/launcher/api.py:195]   run_id           : 8363
+retraining/0 I1024 05:13:25.938000 65367 torch/distributed/launcher/api.py:195]   rdzv_backend     : c10d
+retraining/0 I1024 05:13:25.938000 65367 torch/distributed/launcher/api.py:195]   rdzv_endpoint    : localhost:0
+retraining/0 I1024 05:13:25.938000 65367 torch/distributed/launcher/api.py:195]   rdzv_configs     : {'timeout': 900}
+retraining/0 I1024 05:13:25.938000 65367 torch/distributed/launcher/api.py:195]   max_restarts     : 0
+retraining/0 I1024 05:13:25.938000 65367 torch/distributed/launcher/api.py:195]   monitor_interval : 0.1
+retraining/0 I1024 05:13:25.938000 65367 torch/distributed/launcher/api.py:195]   log_dir          : /root/.nemo_run/experiments/mistral_7b_pretraining/mistral_7b_pretraining_1761282803/mistral_7b_pretraining/nemo_run/mistral_7b_pretraining-knngtkhmqlnvm/torchelastic/mistral_7b_pretraining
+retraining/0 I1024 05:13:25.938000 65367 torch/distributed/launcher/api.py:195]   metrics_cfg      : {}
+retraining/0 I1024 05:13:25.938000 65367 torch/distributed/launcher/api.py:195] 
+retraining/0 I1024 05:13:25.943000 65367 torch/distributed/elastic/agent/server/api.py:860] [default] starting workers for entrypoint: python
+retraining/0 I1024 05:13:25.943000 65367 torch/distributed/elastic/agent/server/api.py:677] [default] Rendezvous'ing worker group
+retraining/0 I1024 05:13:26.026000 65367 torch/distributed/elastic/agent/server/api.py:525] [default] Rendezvous complete for workers. Result:
+retraining/0 I1024 05:13:26.026000 65367 torch/distributed/elastic/agent/server/api.py:525]   restart_count=0
+retraining/0 I1024 05:13:26.026000 65367 torch/distributed/elastic/agent/server/api.py:525]   master_addr=cc76e080f006
+retraining/0 I1024 05:13:26.026000 65367 torch/distributed/elastic/agent/server/api.py:525]   master_port=44051
+retraining/0 I1024 05:13:26.026000 65367 torch/distributed/elastic/agent/server/api.py:525]   group_rank=0
+retraining/0 I1024 05:13:26.026000 65367 torch/distributed/elastic/agent/server/api.py:525]   group_world_size=1
+retraining/0 I1024 05:13:26.026000 65367 torch/distributed/elastic/agent/server/api.py:525]   local_ranks=[0, 1, 2, 3, 4, 5, 6, 7]
+retraining/0 I1024 05:13:26.026000 65367 torch/distributed/elastic/agent/server/api.py:525]   role_ranks=[0, 1, 2, 3, 4, 5, 6, 7]
+retraining/0 I1024 05:13:26.026000 65367 torch/distributed/elastic/agent/server/api.py:525]   global_ranks=[0, 1, 2, 3, 4, 5, 6, 7]
+retraining/0 I1024 05:13:26.026000 65367 torch/distributed/elastic/agent/server/api.py:525]   role_world_sizes=[8, 8, 8, 8, 8, 8, 8, 8]
+retraining/0 I1024 05:13:26.026000 65367 torch/distributed/elastic/agent/server/api.py:525]   global_world_sizes=[8, 8, 8, 8, 8, 8, 8, 8]
+retraining/0 I1024 05:13:26.026000 65367 torch/distributed/elastic/agent/server/api.py:525] 
+retraining/0 I1024 05:13:26.027000 65367 torch/distributed/elastic/agent/server/api.py:685] [default] Starting worker group
+retraining/0 I1024 05:13:26.027000 65367 torch/distributed/elastic/agent/server/local_elastic_agent.py:298] use_agent_store: True
+retraining/0 I1024 05:13:26.028000 65367 torch/distributed/elastic/agent/server/local_elastic_agent.py:192] Environment variable 'TORCHELASTIC_ENABLE_FILE_TIMER' not found. Do not start FileTimerServer.
+retraining/0 I1024 05:13:26.029000 65367 torch/distributed/elastic/agent/server/local_elastic_agent.py:236] Environment variable 'TORCHELASTIC_HEALTH_CHECK_PORT' not found. Do not start health check.
+retraining/0 [default0]:[NeMo W 2025-10-24 05:13:42 nemo_logging:405] /usr/local/lib/python3.12/dist-packages/pydub/utils.py:170: RuntimeWarning: Couldn't find ffmpeg or avconv - defaulting to ffmpeg, but may not work
+retraining/0 [default0]:      warn("Couldn't find ffmpeg or avconv - defaulting to ffmpeg, but may not work", RuntimeWarning)
+retraining/0 [default0]:    
+retraining/0 [default0]:[NeMo I 2025-10-24 05:13:44 nemo_logging:393] Getting Megatron tokenizer for pretrained model name: megatron-gpt-345m, custom vocab file: None, and merges file: None
+retraining/0 [default0]:[NeMo I 2025-10-24 05:13:44 nemo_logging:393] Getting HuggingFace AutoTokenizer with pretrained_model_name: gpt2, vocab_file: /root/.cache/torch/megatron/megatron-gpt-345m_vocab,  merges_files: /root/.cache/torch/megatron/megatron-gpt-345m_merges, special_tokens_dict: {}, and use_fast: False
+retraining/0 [default0]:[NeMo I 2025-10-24 05:13:45 nemo_logging:393] Experiments will be logged at /root/baseline/scripts/nemo_experiments/default/2025-10-24_05-13-45
+retraining/0 [default0]:[NeMo I 2025-10-24 05:13:45 nemo_logging:393] Fixing mis-match between ddp-config & mcore-optimizer config
+retraining/0 [default0]:[NeMo I 2025-10-24 05:13:45 nemo_logging:393] Rank 0 has data parallel group : [0]
+retraining/0 [default0]:[NeMo I 2025-10-24 05:13:45 nemo_logging:393] Rank 0 has combined group of data parallel and context parallel : [0, 1, 2, 3, 4, 5, 6, 7]
+retraining/0 [default0]:[NeMo I 2025-10-24 05:13:45 nemo_logging:393] All data parallel group ranks with context parallel combined: [[0, 1, 2, 3, 4, 5, 6, 7]]
+retraining/0 [default0]:[NeMo I 2025-10-24 05:13:45 nemo_logging:393] Ranks 0 has data parallel rank: 0
+retraining/0 [default0]:[NeMo I 2025-10-24 05:13:45 nemo_logging:393] Rank 0 has context parallel group: [0, 1, 2, 3, 4, 5, 6, 7]
+retraining/0 [default0]:[NeMo I 2025-10-24 05:13:45 nemo_logging:393] All context parallel group ranks: [[0, 1, 2, 3, 4, 5, 6, 7]]
+retraining/0 [default0]:[NeMo I 2025-10-24 05:13:45 nemo_logging:393] Ranks 0 has context parallel rank: 0
+retraining/0 [default0]:[NeMo I 2025-10-24 05:13:45 nemo_logging:393] Rank 0 has model parallel group: [0]
+retraining/0 [default0]:[NeMo I 2025-10-24 05:13:45 nemo_logging:393] All model parallel group ranks: [[0], [1], [2], [3], [4], [5], [6], [7]]
+retraining/0 [default0]:[NeMo I 2025-10-24 05:13:45 nemo_logging:393] Rank 0 has tensor model parallel group: [0]
+retraining/0 [default0]:[NeMo I 2025-10-24 05:13:45 nemo_logging:393] All tensor model parallel group ranks: [[0], [1], [2], [3], [4], [5], [6], [7]]
+retraining/0 [default0]:[NeMo I 2025-10-24 05:13:45 nemo_logging:393] Rank 0 has tensor model parallel rank: 0
+retraining/0 [default0]:[NeMo I 2025-10-24 05:13:45 nemo_logging:393] Rank 0 has pipeline model parallel group: [0]
+retraining/0 [default0]:[NeMo I 2025-10-24 05:13:45 nemo_logging:393] Rank 0 has embedding group: [0]
+retraining/0 [default0]:[NeMo I 2025-10-24 05:13:45 nemo_logging:393] All pipeline model parallel group ranks: [[0], [1], [2], [3], [4], [5], [6], [7]]
+retraining/0 [default0]:[NeMo I 2025-10-24 05:13:45 nemo_logging:393] Rank 0 has pipeline model parallel rank 0
+retraining/0 [default0]:[NeMo I 2025-10-24 05:13:45 nemo_logging:393] All embedding group ranks: [[0], [1], [2], [3], [4], [5], [6], [7]]
+retraining/0 [default0]:[NeMo I 2025-10-24 05:13:45 nemo_logging:393] Rank 0 has embedding rank: 0
+retraining/0 [default1]:[W1024 05:13:45.679738556 ProcessGroupNCCL.cpp:959] Warning: TORCH_NCCL_AVOID_RECORD_STREAMS is the default now, this environment variable is thus deprecated. (function operator())
+retraining/0 [default7]:Traceback (most recent call last):
+retraining/0 [default7]:  File "<frozen runpy>", line 198, in _run_module_as_main
+retraining/0 [default7]:  File "<frozen runpy>", line 88, in _run_code
+retraining/0 [default7]:  File "/opt/Run/nemo_run/core/runners/fdl_runner.py", line 72, in <module>
+retraining/0 [default7]:    fdl_runner_app()
+retraining/0 [default7]:  File "/usr/local/lib/python3.12/dist-packages/typer/main.py", line 340, in __call__
+retraining/0 [default7]:    raise e
+retraining/0 [default7]:  File "/usr/local/lib/python3.12/dist-packages/typer/main.py", line 323, in __call__
+retraining/0 [default7]:    return get_command(self)(*args, **kwargs)
+retraining/0 [default7]:           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+retraining/0 [default7]:  File "/usr/local/lib/python3.12/dist-packages/click/core.py", line 1161, in __call__
+retraining/0 [default7]:    return self.main(*args, **kwargs)
+retraining/0 [default7]:           ^^^^^^^^^^^^^^^^^^^^^^^^^^
+retraining/0 [default7]:  File "/usr/local/lib/python3.12/dist-packages/typer/core.py", line 677, in main
+retraining/0 [default7]:    return _main(
+retraining/0 [default7]:           ^^^^^^
+retraining/0 [default7]:  File "/usr/local/lib/python3.12/dist-packages/typer/core.py", line 195, in _main
+retraining/0 [default7]:    rv = self.invoke(ctx)
+retraining/0 [default7]:         ^^^^^^^^^^^^^^^^
+retraining/0 [default7]:  File "/usr/local/lib/python3.12/dist-packages/click/core.py", line 1443, in invoke
+retraining/0 [default7]:    return ctx.invoke(self.callback, **ctx.params)
+retraining/0 [default7]:           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+retraining/0 [default7]:  File "/usr/local/lib/python3.12/dist-packages/click/core.py", line 788, in invoke
+retraining/0 [default7]:    return __callback(*args, **kwargs)
+retraining/0 [default7]:           ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+retraining/0 [default7]:  File "/usr/local/lib/python3.12/dist-packages/typer/main.py", line 698, in wrapper
+retraining/0 [default7]:    return callback(**use_params)
+retraining/0 [default7]:           ^^^^^^^^^^^^^^^^^^^^^^
+retraining/0 [default7]:  File "/opt/Run/nemo_run/core/runners/fdl_runner.py", line 68, in fdl_direct_run
+retraining/0 [default7]:    fdl_fn()
+retraining/0 [default7]:  File "/opt/NeMo/nemo/collections/llm/api.py", line 181, in pretrain
+retraining/0 [default7]:    return train(
+retraining/0 [default7]:           ^^^^^^
+retraining/0 [default7]:  File "/opt/NeMo/nemo/collections/llm/api.py", line 136, in train
+retraining/0 [default7]:    trainer.fit(model, data)
+retraining/0 [default7]:  File "/usr/local/lib/python3.12/dist-packages/lightning/pytorch/trainer/trainer.py", line 538, in fit
+retraining/0 [default7]:    call._call_and_handle_interrupt(
+retraining/0 [default7]:  File "/usr/local/lib/python3.12/dist-packages/lightning/pytorch/trainer/call.py", line 46, in _call_and_handle_interrupt
+retraining/0 [default7]:    return trainer.strategy.launcher.launch(trainer_fn, *args, trainer=trainer, **kwargs)
+retraining/0 [default7]:           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+retraining/0 [default7]:  File "/usr/local/lib/python3.12/dist-packages/lightning/pytorch/strategies/launchers/subprocess_script.py", line 105, in launch
+retraining/0 [default7]:    return function(*args, **kwargs)
+retraining/0 [default7]:           ^^^^^^^^^^^^^^^^^^^^^^^^^
+retraining/0 [default7]:  File "/usr/local/lib/python3.12/dist-packages/lightning/pytorch/trainer/trainer.py", line 574, in _fit_impl
+retraining/0 [default7]:    self._run(model, ckpt_path=ckpt_path)
+retraining/0 [default7]:  File "/usr/local/lib/python3.12/dist-packages/lightning/pytorch/trainer/trainer.py", line 937, in _run
+retraining/0 [default7]:    self.strategy.setup_environment()
+retraining/0 [default7]:  File "/usr/local/lib/python3.12/dist-packages/lightning/pytorch/strategies/ddp.py", line 153, in setup_environment
+retraining/0 [default7]:    super().setup_environment()
+retraining/0 [default7]:  File "/usr/local/lib/python3.12/dist-packages/lightning/pytorch/strategies/strategy.py", line 128, in setup_environment
+retraining/0 [default7]:    self.accelerator.setup_device(self.root_device)
+retraining/0 [default7]:  File "/usr/local/lib/python3.12/dist-packages/lightning/pytorch/accelerators/cuda.py", line 47, in setup_device
+retraining/0 [default7]:    torch.cuda.set_device(device)
+retraining/0 [default7]:  File "/usr/local/lib/python3.12/dist-packages/torch/cuda/__init__.py", line 529, in set_device
+retraining/0 [default7]:    torch._C._cuda_setDevice(device)
+retraining/0 [default7]:RuntimeError: CUDA error: out of memory
+retraining/0 [default7]:CUDA kernel errors might be asynchronously reported at some other API call, so the stacktrace below might be incorrect.
+retraining/0 [default7]:For debugging consider passing CUDA_LAUNCH_BLOCKING=1
+retraining/0 [default7]:Compile with `TORCH_USE_CUDA_DSA` to enable device-side assertions.
+retraining/0 [default7]:
+retraining/0 [default0]:GPU available: True (cuda), used: True
+retraining/0 [default0]:TPU available: False, using: 0 TPU cores
+retraining/0 [default0]:HPU available: False, using: 0 HPUs
+retraining/0 [default0]:[NeMo W 2025-10-24 05:13:45 nemo_logging:405] "update_logger_directory" is True. Overwriting tensorboard logger "save_dir" to /root/baseline/scripts/nemo_experiments
+retraining/0 [default0]:You are using a CUDA device ('NVIDIA A100-SXM4-80GB') that has Tensor Cores. To properly utilize them, you should set `torch.set_float32_matmul_precision('medium' | 'high')` which will trade-off precision for performance. For more details, read https://pytorch.org/docs/stable/generated/torch.set_float32_matmul_precision.html#torch.set_float32_matmul_precision
+retraining/0 [default0]:[W1024 05:13:45.778425391 ProcessGroupNCCL.cpp:959] Warning: TORCH_NCCL_AVOID_RECORD_STREAMS is the default now, this environment variable is thus deprecated. (function operator())
+retraining/0 [default0]:----------------------------------------------------------------------------------------------------
+retraining/0 [default0]:distributed_backend=nccl
+retraining/0 [default0]:All distributed processes registered. Starting with 8 processes
+retraining/0 [default0]:----------------------------------------------------------------------------------------------------
+retraining/0 [default0]:
+retraining/0 [default5]:Traceback (most recent call last):
+retraining/0 [default5]:  File "<frozen runpy>", line 198, in _run_module_as_main
+retraining/0 [default5]:  File "<frozen runpy>", line 88, in _run_code
+retraining/0 [default5]:  File "/opt/Run/nemo_run/core/runners/fdl_runner.py", line 72, in <module>
+retraining/0 [default5]:    fdl_runner_app()
+retraining/0 [default5]:  File "/usr/local/lib/python3.12/dist-packages/typer/main.py", line 340, in __call__
+retraining/0 [default5]:    raise e
+retraining/0 [default5]:  File "/usr/local/lib/python3.12/dist-packages/typer/main.py", line 323, in __call__
+retraining/0 [default5]:    return get_command(self)(*args, **kwargs)
+retraining/0 [default5]:           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+retraining/0 [default5]:  File "/usr/local/lib/python3.12/dist-packages/click/core.py", line 1161, in __call__
+retraining/0 [default5]:    return self.main(*args, **kwargs)
+retraining/0 [default5]:           ^^^^^^^^^^^^^^^^^^^^^^^^^^
+retraining/0 [default5]:  File "/usr/local/lib/python3.12/dist-packages/typer/core.py", line 677, in main
+retraining/0 [default5]:    return _main(
+retraining/0 [default5]:           ^^^^^^
+retraining/0 [default5]:  File "/usr/local/lib/python3.12/dist-packages/typer/core.py", line 195, in _main
+retraining/0 [default5]:    rv = self.invoke(ctx)
+retraining/0 [default5]:         ^^^^^^^^^^^^^^^^
+retraining/0 [default5]:  File "/usr/local/lib/python3.12/dist-packages/click/core.py", line 1443, in invoke
+retraining/0 [default5]:    return ctx.invoke(self.callback, **ctx.params)
+retraining/0 [default5]:           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+retraining/0 [default5]:  File "/usr/local/lib/python3.12/dist-packages/click/core.py", line 788, in invoke
+retraining/0 [default5]:    return __callback(*args, **kwargs)
+retraining/0 [default5]:           ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+retraining/0 [default5]:  File "/usr/local/lib/python3.12/dist-packages/typer/main.py", line 698, in wrapper
+retraining/0 [default5]:    return callback(**use_params)
+retraining/0 [default5]:           ^^^^^^^^^^^^^^^^^^^^^^
+retraining/0 [default5]:  File "/opt/Run/nemo_run/core/runners/fdl_runner.py", line 68, in fdl_direct_run
+retraining/0 [default5]:    fdl_fn()
+retraining/0 [default5]:  File "/opt/NeMo/nemo/collections/llm/api.py", line 181, in pretrain
+retraining/0 [default5]:    return train(
+retraining/0 [default5]:           ^^^^^^
+retraining/0 [default5]:  File "/opt/NeMo/nemo/collections/llm/api.py", line 136, in train
+retraining/0 [default5]:    trainer.fit(model, data)
+retraining/0 [default5]:  File "/usr/local/lib/python3.12/dist-packages/lightning/pytorch/trainer/trainer.py", line 538, in fit
+retraining/0 [default5]:    call._call_and_handle_interrupt(
+retraining/0 [default5]:  File "/usr/local/lib/python3.12/dist-packages/lightning/pytorch/trainer/call.py", line 46, in _call_and_handle_interrupt
+retraining/0 [default5]:    return trainer.strategy.launcher.launch(trainer_fn, *args, trainer=trainer, **kwargs)
+retraining/0 [default5]:           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+retraining/0 [default5]:  File "/usr/local/lib/python3.12/dist-packages/lightning/pytorch/strategies/launchers/subprocess_script.py", line 105, in launch
+retraining/0 [default5]:    return function(*args, **kwargs)
+retraining/0 [default5]:           ^^^^^^^^^^^^^^^^^^^^^^^^^
+retraining/0 [default5]:  File "/usr/local/lib/python3.12/dist-packages/lightning/pytorch/trainer/trainer.py", line 574, in _fit_impl
+retraining/0 [default5]:    self._run(model, ckpt_path=ckpt_path)
+retraining/0 [default5]:  File "/usr/local/lib/python3.12/dist-packages/lightning/pytorch/trainer/trainer.py", line 937, in _run
+retraining/0 [default5]:    self.strategy.setup_environment()
+retraining/0 [default5]:  File "/usr/local/lib/python3.12/dist-packages/lightning/pytorch/strategies/ddp.py", line 153, in setup_environment
+retraining/0 [default5]:    super().setup_environment()
+retraining/0 [default5]:  File "/usr/local/lib/python3.12/dist-packages/lightning/pytorch/strategies/strategy.py", line 128, in setup_environment
+retraining/0 [default5]:    self.accelerator.setup_device(self.root_device)
+retraining/0 [default5]:  File "/usr/local/lib/python3.12/dist-packages/lightning/pytorch/accelerators/cuda.py", line 47, in setup_device
+retraining/0 [default5]:    torch.cuda.set_device(device)
+retraining/0 [default5]:  File "/usr/local/lib/python3.12/dist-packages/torch/cuda/__init__.py", line 529, in set_device
+retraining/0 [default5]:    torch._C._cuda_setDevice(device)
+retraining/0 [default5]:RuntimeError: CUDA error: out of memory
+retraining/0 [default5]:CUDA kernel errors might be asynchronously reported at some other API call, so the stacktrace below might be incorrect.
+retraining/0 [default5]:For debugging consider passing CUDA_LAUNCH_BLOCKING=1
+retraining/0 [default5]:Compile with `TORCH_USE_CUDA_DSA` to enable device-side assertions.
+retraining/0 [default5]:
+retraining/0 [default3]:[W1024 05:13:46.169680596 ProcessGroupNCCL.cpp:959] Warning: TORCH_NCCL_AVOID_RECORD_STREAMS is the default now, this environment variable is thus deprecated. (function operator())
+retraining/0 [default2]:Traceback (most recent call last):
+retraining/0 [default2]:  File "<frozen runpy>", line 198, in _run_module_as_main
+retraining/0 [default2]:  File "<frozen runpy>", line 88, in _run_code
+retraining/0 [default2]:  File "/opt/Run/nemo_run/core/runners/fdl_runner.py", line 72, in <module>
+retraining/0 [default2]:    fdl_runner_app()
+retraining/0 [default2]:  File "/usr/local/lib/python3.12/dist-packages/typer/main.py", line 340, in __call__
+retraining/0 [default2]:    raise e
+retraining/0 [default2]:  File "/usr/local/lib/python3.12/dist-packages/typer/main.py", line 323, in __call__
+retraining/0 [default2]:    return get_command(self)(*args, **kwargs)
+retraining/0 [default2]:           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+retraining/0 [default2]:  File "/usr/local/lib/python3.12/dist-packages/click/core.py", line 1161, in __call__
+retraining/0 [default2]:    return self.main(*args, **kwargs)
+retraining/0 [default2]:           ^^^^^^^^^^^^^^^^^^^^^^^^^^
+retraining/0 [default2]:  File "/usr/local/lib/python3.12/dist-packages/typer/core.py", line 677, in main
+retraining/0 [default2]:    return _main(
+retraining/0 [default2]:           ^^^^^^
+retraining/0 [default2]:  File "/usr/local/lib/python3.12/dist-packages/typer/core.py", line 195, in _main
+retraining/0 [default2]:    rv = self.invoke(ctx)
+retraining/0 [default2]:         ^^^^^^^^^^^^^^^^
+retraining/0 [default2]:  File "/usr/local/lib/python3.12/dist-packages/click/core.py", line 1443, in invoke
+retraining/0 [default2]:    return ctx.invoke(self.callback, **ctx.params)
+retraining/0 [default2]:           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+retraining/0 [default2]:  File "/usr/local/lib/python3.12/dist-packages/click/core.py", line 788, in invoke
+retraining/0 [default2]:    return __callback(*args, **kwargs)
+retraining/0 [default2]:           ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+retraining/0 [default2]:  File "/usr/local/lib/python3.12/dist-packages/typer/main.py", line 698, in wrapper
+retraining/0 [default2]:    return callback(**use_params)
+retraining/0 [default2]:           ^^^^^^^^^^^^^^^^^^^^^^
+retraining/0 [default2]:  File "/opt/Run/nemo_run/core/runners/fdl_runner.py", line 68, in fdl_direct_run
+retraining/0 [default2]:    fdl_fn()
+retraining/0 [default2]:  File "/opt/NeMo/nemo/collections/llm/api.py", line 181, in pretrain
+retraining/0 [default2]:    return train(
+retraining/0 [default2]:           ^^^^^^
+retraining/0 [default2]:  File "/opt/NeMo/nemo/collections/llm/api.py", line 136, in train
+retraining/0 [default2]:    trainer.fit(model, data)
+retraining/0 [default2]:  File "/usr/local/lib/python3.12/dist-packages/lightning/pytorch/trainer/trainer.py", line 538, in fit
+retraining/0 [default2]:    call._call_and_handle_interrupt(
+retraining/0 [default2]:  File "/usr/local/lib/python3.12/dist-packages/lightning/pytorch/trainer/call.py", line 46, in _call_and_handle_interrupt
+retraining/0 [default2]:    return trainer.strategy.launcher.launch(trainer_fn, *args, trainer=trainer, **kwargs)
+retraining/0 [default2]:           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+retraining/0 [default2]:  File "/usr/local/lib/python3.12/dist-packages/lightning/pytorch/strategies/launchers/subprocess_script.py", line 105, in launch
+retraining/0 [default2]:    return function(*args, **kwargs)
+retraining/0 [default2]:           ^^^^^^^^^^^^^^^^^^^^^^^^^
+retraining/0 [default2]:  File "/usr/local/lib/python3.12/dist-packages/lightning/pytorch/trainer/trainer.py", line 574, in _fit_impl
+retraining/0 [default2]:    self._run(model, ckpt_path=ckpt_path)
+retraining/0 [default2]:  File "/usr/local/lib/python3.12/dist-packages/lightning/pytorch/trainer/trainer.py", line 937, in _run
+retraining/0 [default2]:    self.strategy.setup_environment()
+retraining/0 [default2]:  File "/usr/local/lib/python3.12/dist-packages/lightning/pytorch/strategies/ddp.py", line 153, in setup_environment
+retraining/0 [default2]:    super().setup_environment()
+retraining/0 [default2]:  File "/usr/local/lib/python3.12/dist-packages/lightning/pytorch/strategies/strategy.py", line 128, in setup_environment
+retraining/0 [default2]:    self.accelerator.setup_device(self.root_device)
+retraining/0 [default2]:  File "/usr/local/lib/python3.12/dist-packages/lightning/pytorch/accelerators/cuda.py", line 47, in setup_device
+retraining/0 [default2]:    torch.cuda.set_device(device)
+retraining/0 [default2]:  File "/usr/local/lib/python3.12/dist-packages/torch/cuda/__init__.py", line 529, in set_device
+retraining/0 [default2]:    torch._C._cuda_setDevice(device)
+retraining/0 [default2]:RuntimeError: CUDA error: out of memory
+retraining/0 [default2]:CUDA kernel errors might be asynchronously reported at some other API call, so the stacktrace below might be incorrect.
+retraining/0 [default2]:For debugging consider passing CUDA_LAUNCH_BLOCKING=1
+retraining/0 [default2]:Compile with `TORCH_USE_CUDA_DSA` to enable device-side assertions.
+retraining/0 [default2]:
+retraining/0 [default6]:Traceback (most recent call last):
+retraining/0 [default6]:  File "<frozen runpy>", line 198, in _run_module_as_main
+retraining/0 [default6]:  File "<frozen runpy>", line 88, in _run_code
+retraining/0 [default6]:  File "/opt/Run/nemo_run/core/runners/fdl_runner.py", line 72, in <module>
+retraining/0 [default6]:    fdl_runner_app()
+retraining/0 [default6]:  File "/usr/local/lib/python3.12/dist-packages/typer/main.py", line 340, in __call__
+retraining/0 [default6]:    raise e
+retraining/0 [default6]:  File "/usr/local/lib/python3.12/dist-packages/typer/main.py", line 323, in __call__
+retraining/0 [default6]:    return get_command(self)(*args, **kwargs)
+retraining/0 [default6]:           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+retraining/0 [default6]:  File "/usr/local/lib/python3.12/dist-packages/click/core.py", line 1161, in __call__
+retraining/0 [default6]:    return self.main(*args, **kwargs)
+retraining/0 [default6]:           ^^^^^^^^^^^^^^^^^^^^^^^^^^
+retraining/0 [default6]:  File "/usr/local/lib/python3.12/dist-packages/typer/core.py", line 677, in main
+retraining/0 [default6]:    return _main(
+retraining/0 [default6]:           ^^^^^^
+retraining/0 [default6]:  File "/usr/local/lib/python3.12/dist-packages/typer/core.py", line 195, in _main
+retraining/0 [default6]:    rv = self.invoke(ctx)
+retraining/0 [default6]:         ^^^^^^^^^^^^^^^^
+retraining/0 [default6]:  File "/usr/local/lib/python3.12/dist-packages/click/core.py", line 1443, in invoke
+retraining/0 [default6]:    return ctx.invoke(self.callback, **ctx.params)
+retraining/0 [default6]:           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+retraining/0 [default6]:  File "/usr/local/lib/python3.12/dist-packages/click/core.py", line 788, in invoke
+retraining/0 [default6]:    return __callback(*args, **kwargs)
+retraining/0 [default6]:           ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+retraining/0 [default6]:  File "/usr/local/lib/python3.12/dist-packages/typer/main.py", line 698, in wrapper
+retraining/0 [default6]:    return callback(**use_params)
+retraining/0 [default6]:           ^^^^^^^^^^^^^^^^^^^^^^
+retraining/0 [default6]:  File "/opt/Run/nemo_run/core/runners/fdl_runner.py", line 68, in fdl_direct_run
+retraining/0 [default6]:    fdl_fn()
+retraining/0 [default6]:  File "/opt/NeMo/nemo/collections/llm/api.py", line 181, in pretrain
+retraining/0 [default6]:    return train(
+retraining/0 [default6]:           ^^^^^^
+retraining/0 [default6]:  File "/opt/NeMo/nemo/collections/llm/api.py", line 136, in train
+retraining/0 [default6]:    trainer.fit(model, data)
+retraining/0 [default6]:  File "/usr/local/lib/python3.12/dist-packages/lightning/pytorch/trainer/trainer.py", line 538, in fit
+retraining/0 [default6]:    call._call_and_handle_interrupt(
+retraining/0 [default6]:  File "/usr/local/lib/python3.12/dist-packages/lightning/pytorch/trainer/call.py", line 46, in _call_and_handle_interrupt
+retraining/0 [default6]:    return trainer.strategy.launcher.launch(trainer_fn, *args, trainer=trainer, **kwargs)
+retraining/0 [default6]:           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+retraining/0 [default6]:  File "/usr/local/lib/python3.12/dist-packages/lightning/pytorch/strategies/launchers/subprocess_script.py", line 105, in launch
+retraining/0 [default6]:    return function(*args, **kwargs)
+retraining/0 [default6]:           ^^^^^^^^^^^^^^^^^^^^^^^^^
+retraining/0 [default6]:  File "/usr/local/lib/python3.12/dist-packages/lightning/pytorch/trainer/trainer.py", line 574, in _fit_impl
+retraining/0 [default6]:    self._run(model, ckpt_path=ckpt_path)
+retraining/0 [default6]:  File "/usr/local/lib/python3.12/dist-packages/lightning/pytorch/trainer/trainer.py", line 937, in _run
+retraining/0 [default6]:    self.strategy.setup_environment()
+retraining/0 [default6]:  File "/usr/local/lib/python3.12/dist-packages/lightning/pytorch/strategies/ddp.py", line 153, in setup_environment
+retraining/0 [default6]:    super().setup_environment()
+retraining/0 [default6]:  File "/usr/local/lib/python3.12/dist-packages/lightning/pytorch/strategies/strategy.py", line 128, in setup_environment
+retraining/0 [default6]:    self.accelerator.setup_device(self.root_device)
+retraining/0 [default6]:  File "/usr/local/lib/python3.12/dist-packages/lightning/pytorch/accelerators/cuda.py", line 47, in setup_device
+retraining/0 [default6]:    torch.cuda.set_device(device)
+retraining/0 [default6]:  File "/usr/local/lib/python3.12/dist-packages/torch/cuda/__init__.py", line 529, in set_device
+retraining/0 [default6]:    torch._C._cuda_setDevice(device)
+retraining/0 [default6]:RuntimeError: CUDA error: out of memory
+retraining/0 [default6]:CUDA kernel errors might be asynchronously reported at some other API call, so the stacktrace below might be incorrect.
+retraining/0 [default6]:For debugging consider passing CUDA_LAUNCH_BLOCKING=1
+retraining/0 [default6]:Compile with `TORCH_USE_CUDA_DSA` to enable device-side assertions.
+retraining/0 [default6]:
+retraining/0 [default4]:Traceback (most recent call last):
+retraining/0 [default4]:  File "<frozen runpy>", line 198, in _run_module_as_main
+retraining/0 [default4]:  File "<frozen runpy>", line 88, in _run_code
+retraining/0 [default4]:  File "/opt/Run/nemo_run/core/runners/fdl_runner.py", line 72, in <module>
+retraining/0 [default4]:    fdl_runner_app()
+retraining/0 [default4]:  File "/usr/local/lib/python3.12/dist-packages/typer/main.py", line 340, in __call__
+retraining/0 [default4]:    raise e
+retraining/0 [default4]:  File "/usr/local/lib/python3.12/dist-packages/typer/main.py", line 323, in __call__
+retraining/0 [default4]:    return get_command(self)(*args, **kwargs)
+retraining/0 [default4]:           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+retraining/0 [default4]:  File "/usr/local/lib/python3.12/dist-packages/click/core.py", line 1161, in __call__
+retraining/0 [default4]:    return self.main(*args, **kwargs)
+retraining/0 [default4]:           ^^^^^^^^^^^^^^^^^^^^^^^^^^
+retraining/0 [default4]:  File "/usr/local/lib/python3.12/dist-packages/typer/core.py", line 677, in main
+retraining/0 [default4]:    return _main(
+retraining/0 [default4]:           ^^^^^^
+retraining/0 [default4]:  File "/usr/local/lib/python3.12/dist-packages/typer/core.py", line 195, in _main
+retraining/0 [default4]:    rv = self.invoke(ctx)
+retraining/0 [default4]:         ^^^^^^^^^^^^^^^^
+retraining/0 [default4]:  File "/usr/local/lib/python3.12/dist-packages/click/core.py", line 1443, in invoke
+retraining/0 [default4]:    return ctx.invoke(self.callback, **ctx.params)
+retraining/0 [default4]:           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+retraining/0 [default4]:  File "/usr/local/lib/python3.12/dist-packages/click/core.py", line 788, in invoke
+retraining/0 [default4]:    return __callback(*args, **kwargs)
+retraining/0 [default4]:           ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+retraining/0 [default4]:  File "/usr/local/lib/python3.12/dist-packages/typer/main.py", line 698, in wrapper
+retraining/0 [default4]:    return callback(**use_params)
+retraining/0 [default4]:           ^^^^^^^^^^^^^^^^^^^^^^
+retraining/0 [default4]:  File "/opt/Run/nemo_run/core/runners/fdl_runner.py", line 68, in fdl_direct_run
+retraining/0 [default4]:    fdl_fn()
+retraining/0 [default4]:  File "/opt/NeMo/nemo/collections/llm/api.py", line 181, in pretrain
+retraining/0 [default4]:    return train(
+retraining/0 [default4]:           ^^^^^^
+retraining/0 [default4]:  File "/opt/NeMo/nemo/collections/llm/api.py", line 136, in train
+retraining/0 [default4]:    trainer.fit(model, data)
+retraining/0 [default4]:  File "/usr/local/lib/python3.12/dist-packages/lightning/pytorch/trainer/trainer.py", line 538, in fit
+retraining/0 [default4]:    call._call_and_handle_interrupt(
+retraining/0 [default4]:  File "/usr/local/lib/python3.12/dist-packages/lightning/pytorch/trainer/call.py", line 46, in _call_and_handle_interrupt
+retraining/0 [default4]:    return trainer.strategy.launcher.launch(trainer_fn, *args, trainer=trainer, **kwargs)
+retraining/0 [default4]:           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+retraining/0 [default4]:  File "/usr/local/lib/python3.12/dist-packages/lightning/pytorch/strategies/launchers/subprocess_script.py", line 105, in launch
+retraining/0 [default4]:    return function(*args, **kwargs)
+retraining/0 [default4]:           ^^^^^^^^^^^^^^^^^^^^^^^^^
+retraining/0 [default4]:  File "/usr/local/lib/python3.12/dist-packages/lightning/pytorch/trainer/trainer.py", line 574, in _fit_impl
+retraining/0 [default4]:    self._run(model, ckpt_path=ckpt_path)
+retraining/0 [default4]:  File "/usr/local/lib/python3.12/dist-packages/lightning/pytorch/trainer/trainer.py", line 937, in _run
+retraining/0 [default4]:    self.strategy.setup_environment()
+retraining/0 [default4]:  File "/usr/local/lib/python3.12/dist-packages/lightning/pytorch/strategies/ddp.py", line 153, in setup_environment
+retraining/0 [default4]:    super().setup_environment()
+retraining/0 [default4]:  File "/usr/local/lib/python3.12/dist-packages/lightning/pytorch/strategies/strategy.py", line 128, in setup_environment
+retraining/0 [default4]:    self.accelerator.setup_device(self.root_device)
+retraining/0 [default4]:  File "/usr/local/lib/python3.12/dist-packages/lightning/pytorch/accelerators/cuda.py", line 47, in setup_device
+retraining/0 [default4]:    torch.cuda.set_device(device)
+retraining/0 [default4]:  File "/usr/local/lib/python3.12/dist-packages/torch/cuda/__init__.py", line 529, in set_device
+retraining/0 [default4]:    torch._C._cuda_setDevice(device)
+retraining/0 [default4]:RuntimeError: CUDA error: out of memory
+retraining/0 [default4]:CUDA kernel errors might be asynchronously reported at some other API call, so the stacktrace below might be incorrect.
+retraining/0 [default4]:For debugging consider passing CUDA_LAUNCH_BLOCKING=1
+retraining/0 [default4]:Compile with `TORCH_USE_CUDA_DSA` to enable device-side assertions.
+retraining/0 [default4]:
+retraining/0 W1024 05:13:52.321000 65367 torch/distributed/elastic/multiprocessing/api.py:900] Sending process 65438 closing signal SIGTERM
+retraining/0 W1024 05:13:52.326000 65367 torch/distributed/elastic/multiprocessing/api.py:900] Sending process 65439 closing signal SIGTERM
+retraining/0 W1024 05:13:52.340000 65367 torch/distributed/elastic/multiprocessing/api.py:900] Sending process 65441 closing signal SIGTERM
+retraining/0 W1024 05:13:52.344000 65367 torch/distributed/elastic/multiprocessing/api.py:900] Sending process 65442 closing signal SIGTERM
+retraining/0 W1024 05:13:52.347000 65367 torch/distributed/elastic/multiprocessing/api.py:900] Sending process 65443 closing signal SIGTERM
+retraining/0 W1024 05:13:52.347000 65367 torch/distributed/elastic/multiprocessing/api.py:900] Sending process 65444 closing signal SIGTERM
+retraining/0 W1024 05:13:52.348000 65367 torch/distributed/elastic/multiprocessing/api.py:900] Sending process 65445 closing signal SIGTERM
+retraining/0 E1024 05:13:54.488000 65367 torch/distributed/elastic/multiprocessing/api.py:874] failed (exitcode: 1) local_rank: 2 (pid: 65440) of binary: /usr/bin/python
+retraining/0 I1024 05:13:54.499000 65367 torch/distributed/elastic/multiprocessing/errors/__init__.py:368] ('local_rank %s FAILED with no error file. Decorate your entrypoint fn with @record for traceback info. See: https://pytorch.org/docs/stable/elastic/errors.html', 2)
+retraining/0 Traceback (most recent call last):
+retraining/0   File "/usr/local/bin/torchrun", line 33, in <module>
+retraining/0     sys.exit(load_entry_point('torch==2.8.0a0+5228986c39.nv25.5', 'console_scripts', 'torchrun')())
+retraining/0              ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+retraining/0   File "/usr/local/lib/python3.12/dist-packages/torch/distributed/elastic/multiprocessing/errors/__init__.py", line 355, in wrapper
+retraining/0     return f(*args, **kwargs)
+retraining/0            ^^^^^^^^^^^^^^^^^^
+retraining/0   File "/usr/local/lib/python3.12/dist-packages/torch/distributed/run.py", line 892, in main
+retraining/0     run(args)
+retraining/0   File "/usr/local/lib/python3.12/dist-packages/torch/distributed/run.py", line 883, in run
+retraining/0     elastic_launch(
+retraining/0   File "/usr/local/lib/python3.12/dist-packages/torch/distributed/launcher/api.py", line 139, in __call__
+retraining/0     return launch_agent(self._config, self._entrypoint, list(args))
+retraining/0            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+retraining/0   File "/usr/local/lib/python3.12/dist-packages/torch/distributed/launcher/api.py", line 270, in launch_agent
+retraining/0     raise ChildFailedError(
+retraining/0 torch.distributed.elastic.multiprocessing.errors.ChildFailedError: 
+retraining/0 ============================================================
+retraining/0 nemo_run.core.runners.fdl_runner FAILED
+retraining/0 ------------------------------------------------------------
+retraining/0 Failures:
+retraining/0   <NO_OTHER_FAILURES>
+retraining/0 ------------------------------------------------------------
+retraining/0 Root Cause (first observed failure):
+retraining/0 [0]:
+retraining/0   time      : 2025-10-24_05:13:52
+retraining/0   host      : cc76e080f006
+retraining/0   rank      : 2 (local_rank: 2)
+retraining/0   exitcode  : 1 (pid: 65440)
+retraining/0   error_file: <N/A>
+retraining/0   traceback : To enable traceback see: https://pytorch.org/docs/stable/elastic/errors.html
+retraining/0 ============================================================
+[05:13:56] INFO     Job mistral_7b_pretraining-knngtkhmqlnvm finished: FAILED            launcher.py:161
+                                                                                                        
+# The experiment was run with the following tasks: ['mistral_7b_pretraining']                           
+# You can inspect and reconstruct this experiment at a later point in time using:                       
+experiment = run.Experiment.from_id("mistral_7b_pretraining_1761282803")                                
+experiment.status() # Gets the overall status                                                           
+experiment.logs("mistral_7b_pretraining") # Gets the log for the provided task                          
+experiment.cancel("mistral_7b_pretraining") # Cancels the provided task if still running                
+                                                                                                        
+                                                                                                        
+# You can inspect this experiment at a later point in time using the CLI as well:                       
+nemo experiment status mistral_7b_pretraining_1761282803                                                
+nemo experiment logs mistral_7b_pretraining_1761282803 0                                                
+nemo experiment cancel mistral_7b_pretraining_1761282803 0                                              
+                                                                                                        

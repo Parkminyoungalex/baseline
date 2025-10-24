@@ -1,0 +1,769 @@
+
+=== Parallel Configuration Summary ===
+DP:                        2 
+TP:                        2
+SP:                        Enabled
+PP:                        2
+VP:                        2
+CP:                        1
+Activation Recomputation:  Disabled
+Micro Batch Size:          4
+Global Batch Size:         8
+======================================
+
+──────── Entering Experiment mistral_7b_pretraining with id: mistral_7b_pretraining_1761287615 ─────────
+[06:33:35] INFO     Log directory is:                                             local_scheduler.py:777
+                    /root/.nemo_run/experiments/mistral_7b_pretraining/mistral_7b                       
+                    _pretraining_1761287615/mistral_7b_pretraining                                      
+[06:33:35] Launching job mistral_7b_pretraining for experiment mistral_7b_pretraining  experiment.py:771
+           INFO     Log directory is:                                             local_scheduler.py:777
+                    /root/.nemo_run/experiments/mistral_7b_pretraining/mistral_7b                       
+                    _pretraining_1761287615/mistral_7b_pretraining                                      
+[06:33:36] INFO     Launched app:                                                        launcher.py:111
+                    local_persistent://nemo_run/mistral_7b_pretraining-wtp0bn62fnbd                     
+────────────────── Waiting for Experiment mistral_7b_pretraining_1761287615 to finish ──────────────────
+
+Experiment Status for mistral_7b_pretraining_1761287615
+
+Task 0: mistral_7b_pretraining
+- Status: RUNNING
+- Executor: LocalExecutor
+- Job id: mistral_7b_pretraining-wtp0bn62fnbd
+- Local Directory: /root/.nemo_run/experiments/mistral_7b_pretraining/mistral_7b_pretraining_1761287615/mistral_7b_pretraining
+
+           INFO     Waiting for job mistral_7b_pretraining-wtp0bn62fnbd to finish        launcher.py:131
+                    [log=True]...                                                                       
+retraining/0 I1024 06:33:38.192000 132843 torch/distributed/run.py:649] Using nproc_per_node=8.
+retraining/0 W1024 06:33:38.193000 132843 torch/distributed/run.py:766] 
+retraining/0 W1024 06:33:38.193000 132843 torch/distributed/run.py:766] *****************************************
+retraining/0 W1024 06:33:38.193000 132843 torch/distributed/run.py:766] Setting OMP_NUM_THREADS environment variable for each process to be 1 in default, to avoid your system being overloaded, please further tune the variable for optimal performance in your application as needed. 
+retraining/0 W1024 06:33:38.193000 132843 torch/distributed/run.py:766] *****************************************
+retraining/0 I1024 06:33:38.194000 132843 torch/distributed/launcher/api.py:195] Starting elastic_operator with launch configs:
+retraining/0 I1024 06:33:38.194000 132843 torch/distributed/launcher/api.py:195]   entrypoint       : nemo_run.core.runners.fdl_runner
+retraining/0 I1024 06:33:38.194000 132843 torch/distributed/launcher/api.py:195]   min_nodes        : 1
+retraining/0 I1024 06:33:38.194000 132843 torch/distributed/launcher/api.py:195]   max_nodes        : 1
+retraining/0 I1024 06:33:38.194000 132843 torch/distributed/launcher/api.py:195]   nproc_per_node   : 8
+retraining/0 I1024 06:33:38.194000 132843 torch/distributed/launcher/api.py:195]   run_id           : 8353
+retraining/0 I1024 06:33:38.194000 132843 torch/distributed/launcher/api.py:195]   rdzv_backend     : c10d
+retraining/0 I1024 06:33:38.194000 132843 torch/distributed/launcher/api.py:195]   rdzv_endpoint    : localhost:0
+retraining/0 I1024 06:33:38.194000 132843 torch/distributed/launcher/api.py:195]   rdzv_configs     : {'timeout': 900}
+retraining/0 I1024 06:33:38.194000 132843 torch/distributed/launcher/api.py:195]   max_restarts     : 0
+retraining/0 I1024 06:33:38.194000 132843 torch/distributed/launcher/api.py:195]   monitor_interval : 0.1
+retraining/0 I1024 06:33:38.194000 132843 torch/distributed/launcher/api.py:195]   log_dir          : /root/.nemo_run/experiments/mistral_7b_pretraining/mistral_7b_pretraining_1761287615/mistral_7b_pretraining/nemo_run/mistral_7b_pretraining-wtp0bn62fnbd/torchelastic/mistral_7b_pretraining
+retraining/0 I1024 06:33:38.194000 132843 torch/distributed/launcher/api.py:195]   metrics_cfg      : {}
+retraining/0 I1024 06:33:38.194000 132843 torch/distributed/launcher/api.py:195] 
+retraining/0 I1024 06:33:38.197000 132843 torch/distributed/elastic/agent/server/api.py:860] [default] starting workers for entrypoint: python
+retraining/0 I1024 06:33:38.198000 132843 torch/distributed/elastic/agent/server/api.py:677] [default] Rendezvous'ing worker group
+retraining/0 I1024 06:33:38.472000 132843 torch/distributed/elastic/agent/server/api.py:525] [default] Rendezvous complete for workers. Result:
+retraining/0 I1024 06:33:38.472000 132843 torch/distributed/elastic/agent/server/api.py:525]   restart_count=0
+retraining/0 I1024 06:33:38.472000 132843 torch/distributed/elastic/agent/server/api.py:525]   master_addr=cc76e080f006
+retraining/0 I1024 06:33:38.472000 132843 torch/distributed/elastic/agent/server/api.py:525]   master_port=34093
+retraining/0 I1024 06:33:38.472000 132843 torch/distributed/elastic/agent/server/api.py:525]   group_rank=0
+retraining/0 I1024 06:33:38.472000 132843 torch/distributed/elastic/agent/server/api.py:525]   group_world_size=1
+retraining/0 I1024 06:33:38.472000 132843 torch/distributed/elastic/agent/server/api.py:525]   local_ranks=[0, 1, 2, 3, 4, 5, 6, 7]
+retraining/0 I1024 06:33:38.472000 132843 torch/distributed/elastic/agent/server/api.py:525]   role_ranks=[0, 1, 2, 3, 4, 5, 6, 7]
+retraining/0 I1024 06:33:38.472000 132843 torch/distributed/elastic/agent/server/api.py:525]   global_ranks=[0, 1, 2, 3, 4, 5, 6, 7]
+retraining/0 I1024 06:33:38.472000 132843 torch/distributed/elastic/agent/server/api.py:525]   role_world_sizes=[8, 8, 8, 8, 8, 8, 8, 8]
+retraining/0 I1024 06:33:38.472000 132843 torch/distributed/elastic/agent/server/api.py:525]   global_world_sizes=[8, 8, 8, 8, 8, 8, 8, 8]
+retraining/0 I1024 06:33:38.472000 132843 torch/distributed/elastic/agent/server/api.py:525] 
+retraining/0 I1024 06:33:38.473000 132843 torch/distributed/elastic/agent/server/api.py:685] [default] Starting worker group
+retraining/0 I1024 06:33:38.474000 132843 torch/distributed/elastic/agent/server/local_elastic_agent.py:298] use_agent_store: True
+retraining/0 I1024 06:33:38.474000 132843 torch/distributed/elastic/agent/server/local_elastic_agent.py:192] Environment variable 'TORCHELASTIC_ENABLE_FILE_TIMER' not found. Do not start FileTimerServer.
+retraining/0 I1024 06:33:38.475000 132843 torch/distributed/elastic/agent/server/local_elastic_agent.py:236] Environment variable 'TORCHELASTIC_HEALTH_CHECK_PORT' not found. Do not start health check.
+retraining/0 [default1]:/usr/local/lib/python3.12/dist-packages/torch/cuda/__init__.py:789: UserWarning: Can't initialize NVML
+retraining/0 [default1]:  warnings.warn("Can't initialize NVML")
+retraining/0 [default5]:/usr/local/lib/python3.12/dist-packages/torch/cuda/__init__.py:789: UserWarning: Can't initialize NVML
+retraining/0 [default5]:  warnings.warn("Can't initialize NVML")
+retraining/0 [default7]:/usr/local/lib/python3.12/dist-packages/torch/cuda/__init__.py:789: UserWarning: Can't initialize NVML
+retraining/0 [default7]:  warnings.warn("Can't initialize NVML")
+retraining/0 [default3]:/usr/local/lib/python3.12/dist-packages/torch/cuda/__init__.py:789: UserWarning: Can't initialize NVML
+retraining/0 [default3]:  warnings.warn("Can't initialize NVML")
+retraining/0 [default6]:/usr/local/lib/python3.12/dist-packages/torch/cuda/__init__.py:789: UserWarning: Can't initialize NVML
+retraining/0 [default6]:  warnings.warn("Can't initialize NVML")
+retraining/0 [default0]:/usr/local/lib/python3.12/dist-packages/torch/cuda/__init__.py:789: UserWarning: Can't initialize NVML
+retraining/0 [default0]:  warnings.warn("Can't initialize NVML")
+retraining/0 [default5]:No CUDA runtime is found, using CUDA_HOME='/usr/local/cuda'
+retraining/0 [default2]:/usr/local/lib/python3.12/dist-packages/torch/cuda/__init__.py:789: UserWarning: Can't initialize NVML
+retraining/0 [default2]:  warnings.warn("Can't initialize NVML")
+retraining/0 [default7]:No CUDA runtime is found, using CUDA_HOME='/usr/local/cuda'
+retraining/0 [default3]:No CUDA runtime is found, using CUDA_HOME='/usr/local/cuda'
+retraining/0 [default1]:No CUDA runtime is found, using CUDA_HOME='/usr/local/cuda'
+retraining/0 [default7]:/usr/local/lib/python3.12/dist-packages/torch/cuda/__init__.py:789: UserWarning: Can't initialize NVML
+retraining/0 [default7]:  warnings.warn("Can't initialize NVML")
+retraining/0 [default5]:/usr/local/lib/python3.12/dist-packages/torch/cuda/__init__.py:789: UserWarning: Can't initialize NVML
+retraining/0 [default5]:  warnings.warn("Can't initialize NVML")
+retraining/0 [default3]:/usr/local/lib/python3.12/dist-packages/torch/cuda/__init__.py:789: UserWarning: Can't initialize NVML
+retraining/0 [default3]:  warnings.warn("Can't initialize NVML")
+retraining/0 [default4]:/usr/local/lib/python3.12/dist-packages/torch/cuda/__init__.py:789: UserWarning: Can't initialize NVML
+retraining/0 [default4]:  warnings.warn("Can't initialize NVML")
+retraining/0 [default1]:/usr/local/lib/python3.12/dist-packages/torch/cuda/__init__.py:789: UserWarning: Can't initialize NVML
+retraining/0 [default1]:  warnings.warn("Can't initialize NVML")
+retraining/0 [default5]:The installed version of bitsandbytes was compiled without GPU support. 8-bit optimizers, 8-bit multiplication, and GPU quantization are unavailable.
+retraining/0 [default7]:The installed version of bitsandbytes was compiled without GPU support. 8-bit optimizers, 8-bit multiplication, and GPU quantization are unavailable.
+retraining/0 [default3]:The installed version of bitsandbytes was compiled without GPU support. 8-bit optimizers, 8-bit multiplication, and GPU quantization are unavailable.
+retraining/0 [default1]:The installed version of bitsandbytes was compiled without GPU support. 8-bit optimizers, 8-bit multiplication, and GPU quantization are unavailable.
+retraining/0 [default6]:No CUDA runtime is found, using CUDA_HOME='/usr/local/cuda'
+retraining/0 [default6]:/usr/local/lib/python3.12/dist-packages/torch/cuda/__init__.py:789: UserWarning: Can't initialize NVML
+retraining/0 [default6]:  warnings.warn("Can't initialize NVML")
+retraining/0 [default2]:No CUDA runtime is found, using CUDA_HOME='/usr/local/cuda'
+retraining/0 [default0]:No CUDA runtime is found, using CUDA_HOME='/usr/local/cuda'
+retraining/0 [default4]:No CUDA runtime is found, using CUDA_HOME='/usr/local/cuda'
+retraining/0 [default0]:/usr/local/lib/python3.12/dist-packages/torch/cuda/__init__.py:789: UserWarning: Can't initialize NVML
+retraining/0 [default0]:  warnings.warn("Can't initialize NVML")
+retraining/0 [default2]:/usr/local/lib/python3.12/dist-packages/torch/cuda/__init__.py:789: UserWarning: Can't initialize NVML
+retraining/0 [default2]:  warnings.warn("Can't initialize NVML")
+retraining/0 [default6]:The installed version of bitsandbytes was compiled without GPU support. 8-bit optimizers, 8-bit multiplication, and GPU quantization are unavailable.
+retraining/0 [default4]:/usr/local/lib/python3.12/dist-packages/torch/cuda/__init__.py:789: UserWarning: Can't initialize NVML
+retraining/0 [default4]:  warnings.warn("Can't initialize NVML")
+retraining/0 [default2]:The installed version of bitsandbytes was compiled without GPU support. 8-bit optimizers, 8-bit multiplication, and GPU quantization are unavailable.
+retraining/0 [default4]:The installed version of bitsandbytes was compiled without GPU support. 8-bit optimizers, 8-bit multiplication, and GPU quantization are unavailable.
+retraining/0 [default0]:The installed version of bitsandbytes was compiled without GPU support. 8-bit optimizers, 8-bit multiplication, and GPU quantization are unavailable.
+retraining/0 [default3]:Traceback (most recent call last):
+retraining/0 [default3]:  File "<frozen runpy>", line 198, in _run_module_as_main
+retraining/0 [default3]:  File "<frozen runpy>", line 88, in _run_code
+retraining/0 [default3]:  File "/opt/Run/nemo_run/core/runners/fdl_runner.py", line 72, in <module>
+retraining/0 [default3]:    fdl_runner_app()
+retraining/0 [default3]:  File "/usr/local/lib/python3.12/dist-packages/typer/main.py", line 340, in __call__
+retraining/0 [default3]:    raise e
+retraining/0 [default3]:  File "/usr/local/lib/python3.12/dist-packages/typer/main.py", line 323, in __call__
+retraining/0 [default3]:    return get_command(self)(*args, **kwargs)
+retraining/0 [default3]:           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+retraining/0 [default3]:  File "/usr/local/lib/python3.12/dist-packages/click/core.py", line 1161, in __call__
+retraining/0 [default3]:    return self.main(*args, **kwargs)
+retraining/0 [default3]:           ^^^^^^^^^^^^^^^^^^^^^^^^^^
+retraining/0 [default3]:  File "/usr/local/lib/python3.12/dist-packages/typer/core.py", line 677, in main
+retraining/0 [default3]:    return _main(
+retraining/0 [default3]:           ^^^^^^
+retraining/0 [default3]:  File "/usr/local/lib/python3.12/dist-packages/typer/core.py", line 195, in _main
+retraining/0 [default3]:    rv = self.invoke(ctx)
+retraining/0 [default3]:         ^^^^^^^^^^^^^^^^
+retraining/0 [default3]:  File "/usr/local/lib/python3.12/dist-packages/click/core.py", line 1443, in invoke
+retraining/0 [default3]:    return ctx.invoke(self.callback, **ctx.params)
+retraining/0 [default3]:           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+retraining/0 [default3]:  File "/usr/local/lib/python3.12/dist-packages/click/core.py", line 788, in invoke
+retraining/0 [default3]:    return __callback(*args, **kwargs)
+retraining/0 [default3]:           ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+retraining/0 [default3]:  File "/usr/local/lib/python3.12/dist-packages/typer/main.py", line 698, in wrapper
+retraining/0 [default3]:    return callback(**use_params)
+retraining/0 [default3]:           ^^^^^^^^^^^^^^^^^^^^^^
+retraining/0 [default3]:  File "/opt/Run/nemo_run/core/runners/fdl_runner.py", line 67, in fdl_direct_run
+retraining/0 [default3]:    fdl_fn = fdl.build(fdl_buildable)
+retraining/0 [default3]:             ^^^^^^^^^^^^^^^^^^^^^^^^
+retraining/0 [default3]:  File "/usr/local/lib/python3.12/dist-packages/fiddle/_src/building.py", line 185, in build
+retraining/0 [default3]:    result = daglish.MemoizedTraversal.run(_build, buildable)
+retraining/0 [default3]:             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+retraining/0 [default3]:  File "/usr/local/lib/python3.12/dist-packages/fiddle/_src/daglish.py", line 477, in run
+retraining/0 [default3]:    return fn(root_obj, state)
+retraining/0 [default3]:           ^^^^^^^^^^^^^^^^^^^
+retraining/0 [default3]:  File "/usr/local/lib/python3.12/dist-packages/fiddle/_src/building.py", line 176, in _build
+retraining/0 [default3]:    sub_traversal = state.flattened_map_children(value)
+retraining/0 [default3]:                    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+retraining/0 [default3]:  File "/usr/local/lib/python3.12/dist-packages/fiddle/_src/daglish.py", line 631, in flattened_map_children
+retraining/0 [default3]:    return self._flattened_map_children(value, node_traverser)
+retraining/0 [default3]:           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+retraining/0 [default3]:  File "/usr/local/lib/python3.12/dist-packages/fiddle/_src/daglish.py", line 580, in _flattened_map_children
+retraining/0 [default3]:    self.call(subvalue, path_element)
+retraining/0 [default3]:  File "/usr/local/lib/python3.12/dist-packages/fiddle/_src/daglish.py", line 694, in call
+retraining/0 [default3]:    return self.traversal.apply(value, new_state)
+retraining/0 [default3]:           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+retraining/0 [default3]:  File "/usr/local/lib/python3.12/dist-packages/fiddle/_src/daglish.py", line 786, in apply
+retraining/0 [default3]:    result = self.traversal_fn(value, state)
+retraining/0 [default3]:             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+retraining/0 [default3]:  File "/usr/local/lib/python3.12/dist-packages/fiddle/_src/building.py", line 180, in _build
+retraining/0 [default3]:    return call_buildable(value, arguments, current_path=state.current_path)
+retraining/0 [default3]:           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+retraining/0 [default3]:  File "/usr/local/lib/python3.12/dist-packages/fiddle/_src/building.py", line 119, in call_buildable
+retraining/0 [default3]:    with reraised_exception.try_with_lazy_message(make_message):
+retraining/0 [default3]:  File "/usr/lib/python3.12/contextlib.py", line 158, in __exit__
+retraining/0 [default3]:    self.gen.throw(value)
+retraining/0 [default3]:  File "/usr/local/lib/python3.12/dist-packages/fiddle/_src/reraised_exception.py", line 82, in try_with_lazy_message
+retraining/0 [default3]:    raise decorate_exception(exc, message) from None
+retraining/0 [default3]:  File "/usr/local/lib/python3.12/dist-packages/fiddle/_src/reraised_exception.py", line 74, in try_with_lazy_message
+retraining/0 [default3]:    yield
+retraining/0 [default3]:  File "/usr/local/lib/python3.12/dist-packages/fiddle/_src/building.py", line 120, in call_buildable
+retraining/0 [default3]:    return buildable.__build__(*args, **kwargs)
+retraining/0 [default3]:           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+retraining/0 [default3]:  File "/usr/local/lib/python3.12/dist-packages/fiddle/_src/config.py", line 783, in __build__
+retraining/0 [default3]:    return self.__fn_or_cls__(*args, **kwargs)
+retraining/0 [default3]:           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+retraining/0 [default3]:  File "/opt/NeMo/nemo/lightning/io/mixin.py", line 590, in wrapped_init
+retraining/0 [default3]:    original_init(self, *args, **kwargs)
+retraining/0 [default3]:  File "/usr/local/lib/python3.12/dist-packages/lightning/pytorch/utilities/argparse.py", line 70, in insert_env_defaults
+retraining/0 [default3]:    return fn(self, **kwargs)
+retraining/0 [default3]:           ^^^^^^^^^^^^^^^^^^
+retraining/0 [default3]:  File "/usr/local/lib/python3.12/dist-packages/lightning/pytorch/trainer/trainer.py", line 395, in __init__
+retraining/0 [default3]:    self._accelerator_connector = _AcceleratorConnector(
+retraining/0 [default3]:                                  ^^^^^^^^^^^^^^^^^^^^^^
+retraining/0 [default3]:  File "/usr/local/lib/python3.12/dist-packages/lightning/pytorch/trainer/connectors/accelerator_connector.py", line 143, in __init__
+retraining/0 [default3]:    self._accelerator_flag = self._choose_gpu_accelerator_backend()
+retraining/0 [default3]:                             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+retraining/0 [default3]:  File "/usr/local/lib/python3.12/dist-packages/lightning/pytorch/trainer/connectors/accelerator_connector.py", line 353, in _choose_gpu_accelerator_backend
+retraining/0 [default3]:    raise MisconfigurationException("No supported gpu backend found!")
+retraining/0 [default3]:lightning.fabric.utilities.exceptions.MisconfigurationException: No supported gpu backend found!
+retraining/0 [default3]:
+retraining/0 [default3]:Fiddle context: failed to construct or call Trainer at <root>.trainer with positional arguments: (), keyword arguments: (accelerator='gpu', strategy=<nemo.lightning.pytorch.strategies.megatron_strategy.MegatronStrategy object at 0x775c7735c410>, devices=8, num_nodes=1, callbacks=[<nemo.utils.exp_manager.TimingCallback object at 0x775c7735c290>, <nemo.lightning.pytorch.callbacks.garbage_collection.GarbageCollectionCallback object at 0x775c7735c320>, <nemo.lightning.pytorch.callbacks.megatron_comm_overlap.MegatronCommOverlapCallback object at 0x775c77c1d970>], max_steps=20, limit_val_batches=0, val_check_interval=20, log_every_n_steps=1, enable_checkpointing=False, accumulate_grad_batches=1, use_distributed_sampler=False, plugins=<nemo.lightning.pytorch.plugins.mixed_precision.MegatronMixedPrecision object at 0x775c7735c2f0>).
+retraining/0 [default7]:Traceback (most recent call last):
+retraining/0 [default7]:  File "<frozen runpy>", line 198, in _run_module_as_main
+retraining/0 [default7]:  File "<frozen runpy>", line 88, in _run_code
+retraining/0 [default7]:  File "/opt/Run/nemo_run/core/runners/fdl_runner.py", line 72, in <module>
+retraining/0 [default7]:    fdl_runner_app()
+retraining/0 [default7]:  File "/usr/local/lib/python3.12/dist-packages/typer/main.py", line 340, in __call__
+retraining/0 [default7]:    raise e
+retraining/0 [default7]:  File "/usr/local/lib/python3.12/dist-packages/typer/main.py", line 323, in __call__
+retraining/0 [default7]:    return get_command(self)(*args, **kwargs)
+retraining/0 [default7]:           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+retraining/0 [default7]:  File "/usr/local/lib/python3.12/dist-packages/click/core.py", line 1161, in __call__
+retraining/0 [default7]:    return self.main(*args, **kwargs)
+retraining/0 [default7]:           ^^^^^^^^^^^^^^^^^^^^^^^^^^
+retraining/0 [default7]:  File "/usr/local/lib/python3.12/dist-packages/typer/core.py", line 677, in main
+retraining/0 [default7]:    return _main(
+retraining/0 [default7]:           ^^^^^^
+retraining/0 [default7]:  File "/usr/local/lib/python3.12/dist-packages/typer/core.py", line 195, in _main
+retraining/0 [default7]:    rv = self.invoke(ctx)
+retraining/0 [default7]:         ^^^^^^^^^^^^^^^^
+retraining/0 [default7]:  File "/usr/local/lib/python3.12/dist-packages/click/core.py", line 1443, in invoke
+retraining/0 [default7]:    return ctx.invoke(self.callback, **ctx.params)
+retraining/0 [default7]:           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+retraining/0 [default7]:  File "/usr/local/lib/python3.12/dist-packages/click/core.py", line 788, in invoke
+retraining/0 [default7]:    return __callback(*args, **kwargs)
+retraining/0 [default7]:           ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+retraining/0 [default7]:  File "/usr/local/lib/python3.12/dist-packages/typer/main.py", line 698, in wrapper
+retraining/0 [default7]:    return callback(**use_params)
+retraining/0 [default7]:           ^^^^^^^^^^^^^^^^^^^^^^
+retraining/0 [default7]:  File "/opt/Run/nemo_run/core/runners/fdl_runner.py", line 67, in fdl_direct_run
+retraining/0 [default7]:    fdl_fn = fdl.build(fdl_buildable)
+retraining/0 [default7]:             ^^^^^^^^^^^^^^^^^^^^^^^^
+retraining/0 [default7]:  File "/usr/local/lib/python3.12/dist-packages/fiddle/_src/building.py", line 185, in build
+retraining/0 [default7]:    result = daglish.MemoizedTraversal.run(_build, buildable)
+retraining/0 [default7]:             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+retraining/0 [default7]:  File "/usr/local/lib/python3.12/dist-packages/fiddle/_src/daglish.py", line 477, in run
+retraining/0 [default7]:    return fn(root_obj, state)
+retraining/0 [default7]:           ^^^^^^^^^^^^^^^^^^^
+retraining/0 [default7]:  File "/usr/local/lib/python3.12/dist-packages/fiddle/_src/building.py", line 176, in _build
+retraining/0 [default7]:    sub_traversal = state.flattened_map_children(value)
+retraining/0 [default7]:                    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+retraining/0 [default7]:  File "/usr/local/lib/python3.12/dist-packages/fiddle/_src/daglish.py", line 631, in flattened_map_children
+retraining/0 [default7]:    return self._flattened_map_children(value, node_traverser)
+retraining/0 [default7]:           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+retraining/0 [default7]:  File "/usr/local/lib/python3.12/dist-packages/fiddle/_src/daglish.py", line 580, in _flattened_map_children
+retraining/0 [default7]:    self.call(subvalue, path_element)
+retraining/0 [default7]:  File "/usr/local/lib/python3.12/dist-packages/fiddle/_src/daglish.py", line 694, in call
+retraining/0 [default7]:    return self.traversal.apply(value, new_state)
+retraining/0 [default7]:           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+retraining/0 [default7]:  File "/usr/local/lib/python3.12/dist-packages/fiddle/_src/daglish.py", line 786, in apply
+retraining/0 [default7]:    result = self.traversal_fn(value, state)
+retraining/0 [default7]:             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+retraining/0 [default7]:  File "/usr/local/lib/python3.12/dist-packages/fiddle/_src/building.py", line 180, in _build
+retraining/0 [default7]:    return call_buildable(value, arguments, current_path=state.current_path)
+retraining/0 [default7]:           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+retraining/0 [default7]:  File "/usr/local/lib/python3.12/dist-packages/fiddle/_src/building.py", line 119, in call_buildable
+retraining/0 [default7]:    with reraised_exception.try_with_lazy_message(make_message):
+retraining/0 [default7]:  File "/usr/lib/python3.12/contextlib.py", line 158, in __exit__
+retraining/0 [default7]:    self.gen.throw(value)
+retraining/0 [default7]:  File "/usr/local/lib/python3.12/dist-packages/fiddle/_src/reraised_exception.py", line 82, in try_with_lazy_message
+retraining/0 [default7]:    raise decorate_exception(exc, message) from None
+retraining/0 [default7]:  File "/usr/local/lib/python3.12/dist-packages/fiddle/_src/reraised_exception.py", line 74, in try_with_lazy_message
+retraining/0 [default7]:    yield
+retraining/0 [default7]:  File "/usr/local/lib/python3.12/dist-packages/fiddle/_src/building.py", line 120, in call_buildable
+retraining/0 [default7]:    return buildable.__build__(*args, **kwargs)
+retraining/0 [default7]:           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+retraining/0 [default7]:  File "/usr/local/lib/python3.12/dist-packages/fiddle/_src/config.py", line 783, in __build__
+retraining/0 [default7]:    return self.__fn_or_cls__(*args, **kwargs)
+retraining/0 [default7]:           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+retraining/0 [default7]:  File "/opt/NeMo/nemo/lightning/io/mixin.py", line 590, in wrapped_init
+retraining/0 [default7]:    original_init(self, *args, **kwargs)
+retraining/0 [default7]:  File "/usr/local/lib/python3.12/dist-packages/lightning/pytorch/utilities/argparse.py", line 70, in insert_env_defaults
+retraining/0 [default7]:    return fn(self, **kwargs)
+retraining/0 [default7]:           ^^^^^^^^^^^^^^^^^^
+retraining/0 [default7]:  File "/usr/local/lib/python3.12/dist-packages/lightning/pytorch/trainer/trainer.py", line 395, in __init__
+retraining/0 [default7]:    self._accelerator_connector = _AcceleratorConnector(
+retraining/0 [default7]:                                  ^^^^^^^^^^^^^^^^^^^^^^
+retraining/0 [default7]:  File "/usr/local/lib/python3.12/dist-packages/lightning/pytorch/trainer/connectors/accelerator_connector.py", line 143, in __init__
+retraining/0 [default7]:    self._accelerator_flag = self._choose_gpu_accelerator_backend()
+retraining/0 [default7]:                             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+retraining/0 [default7]:  File "/usr/local/lib/python3.12/dist-packages/lightning/pytorch/trainer/connectors/accelerator_connector.py", line 353, in _choose_gpu_accelerator_backend
+retraining/0 [default7]:    raise MisconfigurationException("No supported gpu backend found!")
+retraining/0 [default7]:lightning.fabric.utilities.exceptions.MisconfigurationException: No supported gpu backend found!
+retraining/0 [default7]:
+retraining/0 [default7]:Fiddle context: failed to construct or call Trainer at <root>.trainer with positional arguments: (), keyword arguments: (accelerator='gpu', strategy=<nemo.lightning.pytorch.strategies.megatron_strategy.MegatronStrategy object at 0x72510d57fb60>, devices=8, num_nodes=1, callbacks=[<nemo.utils.exp_manager.TimingCallback object at 0x72510d57fce0>, <nemo.lightning.pytorch.callbacks.garbage_collection.GarbageCollectionCallback object at 0x72510d57fc50>, <nemo.lightning.pytorch.callbacks.megatron_comm_overlap.MegatronCommOverlapCallback object at 0x72510d57f110>], max_steps=20, limit_val_batches=0, val_check_interval=20, log_every_n_steps=1, enable_checkpointing=False, accumulate_grad_batches=1, use_distributed_sampler=False, plugins=<nemo.lightning.pytorch.plugins.mixed_precision.MegatronMixedPrecision object at 0x72510d57fc80>).
+retraining/0 [default5]:Traceback (most recent call last):
+retraining/0 [default5]:  File "<frozen runpy>", line 198, in _run_module_as_main
+retraining/0 [default5]:  File "<frozen runpy>", line 88, in _run_code
+retraining/0 [default5]:  File "/opt/Run/nemo_run/core/runners/fdl_runner.py", line 72, in <module>
+retraining/0 [default5]:    fdl_runner_app()
+retraining/0 [default5]:  File "/usr/local/lib/python3.12/dist-packages/typer/main.py", line 340, in __call__
+retraining/0 [default5]:    raise e
+retraining/0 [default5]:  File "/usr/local/lib/python3.12/dist-packages/typer/main.py", line 323, in __call__
+retraining/0 [default5]:    return get_command(self)(*args, **kwargs)
+retraining/0 [default5]:           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+retraining/0 [default5]:  File "/usr/local/lib/python3.12/dist-packages/click/core.py", line 1161, in __call__
+retraining/0 [default5]:    return self.main(*args, **kwargs)
+retraining/0 [default5]:           ^^^^^^^^^^^^^^^^^^^^^^^^^^
+retraining/0 [default5]:  File "/usr/local/lib/python3.12/dist-packages/typer/core.py", line 677, in main
+retraining/0 [default5]:    return _main(
+retraining/0 [default5]:           ^^^^^^
+retraining/0 [default5]:  File "/usr/local/lib/python3.12/dist-packages/typer/core.py", line 195, in _main
+retraining/0 [default5]:    rv = self.invoke(ctx)
+retraining/0 [default5]:         ^^^^^^^^^^^^^^^^
+retraining/0 [default5]:  File "/usr/local/lib/python3.12/dist-packages/click/core.py", line 1443, in invoke
+retraining/0 [default5]:    return ctx.invoke(self.callback, **ctx.params)
+retraining/0 [default5]:           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+retraining/0 [default5]:  File "/usr/local/lib/python3.12/dist-packages/click/core.py", line 788, in invoke
+retraining/0 [default5]:    return __callback(*args, **kwargs)
+retraining/0 [default5]:           ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+retraining/0 [default5]:  File "/usr/local/lib/python3.12/dist-packages/typer/main.py", line 698, in wrapper
+retraining/0 [default5]:    return callback(**use_params)
+retraining/0 [default5]:           ^^^^^^^^^^^^^^^^^^^^^^
+retraining/0 [default5]:  File "/opt/Run/nemo_run/core/runners/fdl_runner.py", line 67, in fdl_direct_run
+retraining/0 [default5]:    fdl_fn = fdl.build(fdl_buildable)
+retraining/0 [default5]:             ^^^^^^^^^^^^^^^^^^^^^^^^
+retraining/0 [default5]:  File "/usr/local/lib/python3.12/dist-packages/fiddle/_src/building.py", line 185, in build
+retraining/0 [default5]:    result = daglish.MemoizedTraversal.run(_build, buildable)
+retraining/0 [default5]:             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+retraining/0 [default5]:  File "/usr/local/lib/python3.12/dist-packages/fiddle/_src/daglish.py", line 477, in run
+retraining/0 [default5]:    return fn(root_obj, state)
+retraining/0 [default5]:           ^^^^^^^^^^^^^^^^^^^
+retraining/0 [default5]:  File "/usr/local/lib/python3.12/dist-packages/fiddle/_src/building.py", line 176, in _build
+retraining/0 [default5]:    sub_traversal = state.flattened_map_children(value)
+retraining/0 [default5]:                    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+retraining/0 [default5]:  File "/usr/local/lib/python3.12/dist-packages/fiddle/_src/daglish.py", line 631, in flattened_map_children
+retraining/0 [default5]:    return self._flattened_map_children(value, node_traverser)
+retraining/0 [default5]:           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+retraining/0 [default5]:  File "/usr/local/lib/python3.12/dist-packages/fiddle/_src/daglish.py", line 580, in _flattened_map_children
+retraining/0 [default5]:    self.call(subvalue, path_element)
+retraining/0 [default5]:  File "/usr/local/lib/python3.12/dist-packages/fiddle/_src/daglish.py", line 694, in call
+retraining/0 [default5]:    return self.traversal.apply(value, new_state)
+retraining/0 [default5]:           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+retraining/0 [default5]:  File "/usr/local/lib/python3.12/dist-packages/fiddle/_src/daglish.py", line 786, in apply
+retraining/0 [default5]:    result = self.traversal_fn(value, state)
+retraining/0 [default5]:             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+retraining/0 [default5]:  File "/usr/local/lib/python3.12/dist-packages/fiddle/_src/building.py", line 180, in _build
+retraining/0 [default5]:    return call_buildable(value, arguments, current_path=state.current_path)
+retraining/0 [default5]:           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+retraining/0 [default5]:  File "/usr/local/lib/python3.12/dist-packages/fiddle/_src/building.py", line 119, in call_buildable
+retraining/0 [default5]:    with reraised_exception.try_with_lazy_message(make_message):
+retraining/0 [default5]:  File "/usr/lib/python3.12/contextlib.py", line 158, in __exit__
+retraining/0 [default5]:    self.gen.throw(value)
+retraining/0 [default5]:  File "/usr/local/lib/python3.12/dist-packages/fiddle/_src/reraised_exception.py", line 82, in try_with_lazy_message
+retraining/0 [default5]:    raise decorate_exception(exc, message) from None
+retraining/0 [default5]:  File "/usr/local/lib/python3.12/dist-packages/fiddle/_src/reraised_exception.py", line 74, in try_with_lazy_message
+retraining/0 [default5]:    yield
+retraining/0 [default5]:  File "/usr/local/lib/python3.12/dist-packages/fiddle/_src/building.py", line 120, in call_buildable
+retraining/0 [default5]:    return buildable.__build__(*args, **kwargs)
+retraining/0 [default5]:           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+retraining/0 [default5]:  File "/usr/local/lib/python3.12/dist-packages/fiddle/_src/config.py", line 783, in __build__
+retraining/0 [default5]:    return self.__fn_or_cls__(*args, **kwargs)
+retraining/0 [default5]:           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+retraining/0 [default5]:  File "/opt/NeMo/nemo/lightning/io/mixin.py", line 590, in wrapped_init
+retraining/0 [default5]:    original_init(self, *args, **kwargs)
+retraining/0 [default5]:  File "/usr/local/lib/python3.12/dist-packages/lightning/pytorch/utilities/argparse.py", line 70, in insert_env_defaults
+retraining/0 [default5]:    return fn(self, **kwargs)
+retraining/0 [default5]:           ^^^^^^^^^^^^^^^^^^
+retraining/0 [default5]:  File "/usr/local/lib/python3.12/dist-packages/lightning/pytorch/trainer/trainer.py", line 395, in __init__
+retraining/0 [default5]:    self._accelerator_connector = _AcceleratorConnector(
+retraining/0 [default5]:                                  ^^^^^^^^^^^^^^^^^^^^^^
+retraining/0 [default5]:  File "/usr/local/lib/python3.12/dist-packages/lightning/pytorch/trainer/connectors/accelerator_connector.py", line 143, in __init__
+retraining/0 [default5]:    self._accelerator_flag = self._choose_gpu_accelerator_backend()
+retraining/0 [default5]:                             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+retraining/0 [default5]:  File "/usr/local/lib/python3.12/dist-packages/lightning/pytorch/trainer/connectors/accelerator_connector.py", line 353, in _choose_gpu_accelerator_backend
+retraining/0 [default5]:    raise MisconfigurationException("No supported gpu backend found!")
+retraining/0 [default5]:lightning.fabric.utilities.exceptions.MisconfigurationException: No supported gpu backend found!
+retraining/0 [default5]:
+retraining/0 [default5]:Fiddle context: failed to construct or call Trainer at <root>.trainer with positional arguments: (), keyword arguments: (accelerator='gpu', strategy=<nemo.lightning.pytorch.strategies.megatron_strategy.MegatronStrategy object at 0x7252f33443b0>, devices=8, num_nodes=1, callbacks=[<nemo.utils.exp_manager.TimingCallback object at 0x7252f3344230>, <nemo.lightning.pytorch.callbacks.garbage_collection.GarbageCollectionCallback object at 0x7252f33442c0>, <nemo.lightning.pytorch.callbacks.megatron_comm_overlap.MegatronCommOverlapCallback object at 0x7252f3ca9580>], max_steps=20, limit_val_batches=0, val_check_interval=20, log_every_n_steps=1, enable_checkpointing=False, accumulate_grad_batches=1, use_distributed_sampler=False, plugins=<nemo.lightning.pytorch.plugins.mixed_precision.MegatronMixedPrecision object at 0x7252f3344290>).
+retraining/0 [default1]:Traceback (most recent call last):
+retraining/0 [default1]:  File "<frozen runpy>", line 198, in _run_module_as_main
+retraining/0 [default1]:  File "<frozen runpy>", line 88, in _run_code
+retraining/0 [default1]:  File "/opt/Run/nemo_run/core/runners/fdl_runner.py", line 72, in <module>
+retraining/0 [default1]:    fdl_runner_app()
+retraining/0 [default1]:  File "/usr/local/lib/python3.12/dist-packages/typer/main.py", line 340, in __call__
+retraining/0 [default1]:    raise e
+retraining/0 [default1]:  File "/usr/local/lib/python3.12/dist-packages/typer/main.py", line 323, in __call__
+retraining/0 [default1]:    return get_command(self)(*args, **kwargs)
+retraining/0 [default1]:           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+retraining/0 [default1]:  File "/usr/local/lib/python3.12/dist-packages/click/core.py", line 1161, in __call__
+retraining/0 [default1]:    return self.main(*args, **kwargs)
+retraining/0 [default1]:           ^^^^^^^^^^^^^^^^^^^^^^^^^^
+retraining/0 [default1]:  File "/usr/local/lib/python3.12/dist-packages/typer/core.py", line 677, in main
+retraining/0 [default1]:    return _main(
+retraining/0 [default1]:           ^^^^^^
+retraining/0 [default1]:  File "/usr/local/lib/python3.12/dist-packages/typer/core.py", line 195, in _main
+retraining/0 [default1]:    rv = self.invoke(ctx)
+retraining/0 [default1]:         ^^^^^^^^^^^^^^^^
+retraining/0 [default1]:  File "/usr/local/lib/python3.12/dist-packages/click/core.py", line 1443, in invoke
+retraining/0 [default1]:    return ctx.invoke(self.callback, **ctx.params)
+retraining/0 [default1]:           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+retraining/0 [default1]:  File "/usr/local/lib/python3.12/dist-packages/click/core.py", line 788, in invoke
+retraining/0 [default1]:    return __callback(*args, **kwargs)
+retraining/0 [default1]:           ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+retraining/0 [default1]:  File "/usr/local/lib/python3.12/dist-packages/typer/main.py", line 698, in wrapper
+retraining/0 [default1]:    return callback(**use_params)
+retraining/0 [default1]:           ^^^^^^^^^^^^^^^^^^^^^^
+retraining/0 [default1]:  File "/opt/Run/nemo_run/core/runners/fdl_runner.py", line 67, in fdl_direct_run
+retraining/0 [default1]:    fdl_fn = fdl.build(fdl_buildable)
+retraining/0 [default1]:             ^^^^^^^^^^^^^^^^^^^^^^^^
+retraining/0 [default1]:  File "/usr/local/lib/python3.12/dist-packages/fiddle/_src/building.py", line 185, in build
+retraining/0 [default1]:    result = daglish.MemoizedTraversal.run(_build, buildable)
+retraining/0 [default1]:             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+retraining/0 [default1]:  File "/usr/local/lib/python3.12/dist-packages/fiddle/_src/daglish.py", line 477, in run
+retraining/0 [default1]:    return fn(root_obj, state)
+retraining/0 [default1]:           ^^^^^^^^^^^^^^^^^^^
+retraining/0 [default1]:  File "/usr/local/lib/python3.12/dist-packages/fiddle/_src/building.py", line 176, in _build
+retraining/0 [default1]:    sub_traversal = state.flattened_map_children(value)
+retraining/0 [default1]:                    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+retraining/0 [default1]:  File "/usr/local/lib/python3.12/dist-packages/fiddle/_src/daglish.py", line 631, in flattened_map_children
+retraining/0 [default1]:    return self._flattened_map_children(value, node_traverser)
+retraining/0 [default1]:           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+retraining/0 [default1]:  File "/usr/local/lib/python3.12/dist-packages/fiddle/_src/daglish.py", line 580, in _flattened_map_children
+retraining/0 [default1]:    self.call(subvalue, path_element)
+retraining/0 [default1]:  File "/usr/local/lib/python3.12/dist-packages/fiddle/_src/daglish.py", line 694, in call
+retraining/0 [default1]:    return self.traversal.apply(value, new_state)
+retraining/0 [default1]:           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+retraining/0 [default1]:  File "/usr/local/lib/python3.12/dist-packages/fiddle/_src/daglish.py", line 786, in apply
+retraining/0 [default1]:    result = self.traversal_fn(value, state)
+retraining/0 [default1]:             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+retraining/0 [default1]:  File "/usr/local/lib/python3.12/dist-packages/fiddle/_src/building.py", line 180, in _build
+retraining/0 [default1]:    return call_buildable(value, arguments, current_path=state.current_path)
+retraining/0 [default1]:           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+retraining/0 [default1]:  File "/usr/local/lib/python3.12/dist-packages/fiddle/_src/building.py", line 119, in call_buildable
+retraining/0 [default1]:    with reraised_exception.try_with_lazy_message(make_message):
+retraining/0 [default1]:  File "/usr/lib/python3.12/contextlib.py", line 158, in __exit__
+retraining/0 [default1]:    self.gen.throw(value)
+retraining/0 [default1]:  File "/usr/local/lib/python3.12/dist-packages/fiddle/_src/reraised_exception.py", line 82, in try_with_lazy_message
+retraining/0 [default1]:    raise decorate_exception(exc, message) from None
+retraining/0 [default1]:  File "/usr/local/lib/python3.12/dist-packages/fiddle/_src/reraised_exception.py", line 74, in try_with_lazy_message
+retraining/0 [default1]:    yield
+retraining/0 [default1]:  File "/usr/local/lib/python3.12/dist-packages/fiddle/_src/building.py", line 120, in call_buildable
+retraining/0 [default1]:    return buildable.__build__(*args, **kwargs)
+retraining/0 [default1]:           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+retraining/0 [default1]:  File "/usr/local/lib/python3.12/dist-packages/fiddle/_src/config.py", line 783, in __build__
+retraining/0 [default1]:    return self.__fn_or_cls__(*args, **kwargs)
+retraining/0 [default1]:           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+retraining/0 [default1]:  File "/opt/NeMo/nemo/lightning/io/mixin.py", line 590, in wrapped_init
+retraining/0 [default1]:    original_init(self, *args, **kwargs)
+retraining/0 [default1]:  File "/usr/local/lib/python3.12/dist-packages/lightning/pytorch/utilities/argparse.py", line 70, in insert_env_defaults
+retraining/0 [default1]:    return fn(self, **kwargs)
+retraining/0 [default1]:           ^^^^^^^^^^^^^^^^^^
+retraining/0 [default1]:  File "/usr/local/lib/python3.12/dist-packages/lightning/pytorch/trainer/trainer.py", line 395, in __init__
+retraining/0 [default1]:    self._accelerator_connector = _AcceleratorConnector(
+retraining/0 [default1]:                                  ^^^^^^^^^^^^^^^^^^^^^^
+retraining/0 [default1]:  File "/usr/local/lib/python3.12/dist-packages/lightning/pytorch/trainer/connectors/accelerator_connector.py", line 143, in __init__
+retraining/0 [default1]:    self._accelerator_flag = self._choose_gpu_accelerator_backend()
+retraining/0 [default1]:                             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+retraining/0 [default1]:  File "/usr/local/lib/python3.12/dist-packages/lightning/pytorch/trainer/connectors/accelerator_connector.py", line 353, in _choose_gpu_accelerator_backend
+retraining/0 [default1]:    raise MisconfigurationException("No supported gpu backend found!")
+retraining/0 [default1]:lightning.fabric.utilities.exceptions.MisconfigurationException: No supported gpu backend found!
+retraining/0 [default1]:
+retraining/0 [default1]:Fiddle context: failed to construct or call Trainer at <root>.trainer with positional arguments: (), keyword arguments: (accelerator='gpu', strategy=<nemo.lightning.pytorch.strategies.megatron_strategy.MegatronStrategy object at 0x7c20a0fa8320>, devices=8, num_nodes=1, callbacks=[<nemo.utils.exp_manager.TimingCallback object at 0x7c20a0fa81a0>, <nemo.lightning.pytorch.callbacks.garbage_collection.GarbageCollectionCallback object at 0x7c20a0fa8200>, <nemo.lightning.pytorch.callbacks.megatron_comm_overlap.MegatronCommOverlapCallback object at 0x7c20a0fa82c0>], max_steps=20, limit_val_batches=0, val_check_interval=20, log_every_n_steps=1, enable_checkpointing=False, accumulate_grad_batches=1, use_distributed_sampler=False, plugins=<nemo.lightning.pytorch.plugins.mixed_precision.MegatronMixedPrecision object at 0x7c20a0fa8170>).
+retraining/0 [default0]:[NeMo W 2025-10-24 06:33:57 nemo_logging:405] /usr/local/lib/python3.12/dist-packages/pydub/utils.py:170: RuntimeWarning: Couldn't find ffmpeg or avconv - defaulting to ffmpeg, but may not work
+retraining/0 [default0]:      warn("Couldn't find ffmpeg or avconv - defaulting to ffmpeg, but may not work", RuntimeWarning)
+retraining/0 [default0]:    
+retraining/0 [default6]:Traceback (most recent call last):
+retraining/0 [default6]:  File "<frozen runpy>", line 198, in _run_module_as_main
+retraining/0 [default6]:  File "<frozen runpy>", line 88, in _run_code
+retraining/0 [default6]:  File "/opt/Run/nemo_run/core/runners/fdl_runner.py", line 72, in <module>
+retraining/0 [default6]:    fdl_runner_app()
+retraining/0 [default6]:  File "/usr/local/lib/python3.12/dist-packages/typer/main.py", line 340, in __call__
+retraining/0 [default6]:    raise e
+retraining/0 [default6]:  File "/usr/local/lib/python3.12/dist-packages/typer/main.py", line 323, in __call__
+retraining/0 [default6]:    return get_command(self)(*args, **kwargs)
+retraining/0 [default6]:           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+retraining/0 [default6]:  File "/usr/local/lib/python3.12/dist-packages/click/core.py", line 1161, in __call__
+retraining/0 [default6]:    return self.main(*args, **kwargs)
+retraining/0 [default6]:           ^^^^^^^^^^^^^^^^^^^^^^^^^^
+retraining/0 [default6]:  File "/usr/local/lib/python3.12/dist-packages/typer/core.py", line 677, in main
+retraining/0 [default6]:    return _main(
+retraining/0 [default6]:           ^^^^^^
+retraining/0 [default6]:  File "/usr/local/lib/python3.12/dist-packages/typer/core.py", line 195, in _main
+retraining/0 [default6]:    rv = self.invoke(ctx)
+retraining/0 [default6]:         ^^^^^^^^^^^^^^^^
+retraining/0 [default6]:  File "/usr/local/lib/python3.12/dist-packages/click/core.py", line 1443, in invoke
+retraining/0 [default6]:    return ctx.invoke(self.callback, **ctx.params)
+retraining/0 [default6]:           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+retraining/0 [default6]:  File "/usr/local/lib/python3.12/dist-packages/click/core.py", line 788, in invoke
+retraining/0 [default6]:    return __callback(*args, **kwargs)
+retraining/0 [default6]:           ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+retraining/0 [default6]:  File "/usr/local/lib/python3.12/dist-packages/typer/main.py", line 698, in wrapper
+retraining/0 [default6]:    return callback(**use_params)
+retraining/0 [default6]:           ^^^^^^^^^^^^^^^^^^^^^^
+retraining/0 [default6]:  File "/opt/Run/nemo_run/core/runners/fdl_runner.py", line 67, in fdl_direct_run
+retraining/0 [default6]:    fdl_fn = fdl.build(fdl_buildable)
+retraining/0 [default6]:             ^^^^^^^^^^^^^^^^^^^^^^^^
+retraining/0 [default6]:  File "/usr/local/lib/python3.12/dist-packages/fiddle/_src/building.py", line 185, in build
+retraining/0 [default6]:    result = daglish.MemoizedTraversal.run(_build, buildable)
+retraining/0 [default6]:             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+retraining/0 [default6]:  File "/usr/local/lib/python3.12/dist-packages/fiddle/_src/daglish.py", line 477, in run
+retraining/0 [default6]:    return fn(root_obj, state)
+retraining/0 [default6]:           ^^^^^^^^^^^^^^^^^^^
+retraining/0 [default6]:  File "/usr/local/lib/python3.12/dist-packages/fiddle/_src/building.py", line 176, in _build
+retraining/0 [default6]:    sub_traversal = state.flattened_map_children(value)
+retraining/0 [default6]:                    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+retraining/0 [default6]:  File "/usr/local/lib/python3.12/dist-packages/fiddle/_src/daglish.py", line 631, in flattened_map_children
+retraining/0 [default6]:    return self._flattened_map_children(value, node_traverser)
+retraining/0 [default6]:           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+retraining/0 [default6]:  File "/usr/local/lib/python3.12/dist-packages/fiddle/_src/daglish.py", line 580, in _flattened_map_children
+retraining/0 [default6]:    self.call(subvalue, path_element)
+retraining/0 [default6]:  File "/usr/local/lib/python3.12/dist-packages/fiddle/_src/daglish.py", line 694, in call
+retraining/0 [default6]:    return self.traversal.apply(value, new_state)
+retraining/0 [default6]:           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+retraining/0 [default6]:  File "/usr/local/lib/python3.12/dist-packages/fiddle/_src/daglish.py", line 786, in apply
+retraining/0 [default6]:    result = self.traversal_fn(value, state)
+retraining/0 [default6]:             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+retraining/0 [default6]:  File "/usr/local/lib/python3.12/dist-packages/fiddle/_src/building.py", line 180, in _build
+retraining/0 [default6]:    return call_buildable(value, arguments, current_path=state.current_path)
+retraining/0 [default6]:           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+retraining/0 [default6]:  File "/usr/local/lib/python3.12/dist-packages/fiddle/_src/building.py", line 119, in call_buildable
+retraining/0 [default6]:    with reraised_exception.try_with_lazy_message(make_message):
+retraining/0 [default6]:  File "/usr/lib/python3.12/contextlib.py", line 158, in __exit__
+retraining/0 [default6]:    self.gen.throw(value)
+retraining/0 [default6]:  File "/usr/local/lib/python3.12/dist-packages/fiddle/_src/reraised_exception.py", line 82, in try_with_lazy_message
+retraining/0 [default6]:    raise decorate_exception(exc, message) from None
+retraining/0 [default6]:  File "/usr/local/lib/python3.12/dist-packages/fiddle/_src/reraised_exception.py", line 74, in try_with_lazy_message
+retraining/0 [default6]:    yield
+retraining/0 [default6]:  File "/usr/local/lib/python3.12/dist-packages/fiddle/_src/building.py", line 120, in call_buildable
+retraining/0 [default6]:    return buildable.__build__(*args, **kwargs)
+retraining/0 [default6]:           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+retraining/0 [default6]:  File "/usr/local/lib/python3.12/dist-packages/fiddle/_src/config.py", line 783, in __build__
+retraining/0 [default6]:    return self.__fn_or_cls__(*args, **kwargs)
+retraining/0 [default6]:           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+retraining/0 [default6]:  File "/opt/NeMo/nemo/lightning/io/mixin.py", line 590, in wrapped_init
+retraining/0 [default6]:    original_init(self, *args, **kwargs)
+retraining/0 [default6]:  File "/usr/local/lib/python3.12/dist-packages/lightning/pytorch/utilities/argparse.py", line 70, in insert_env_defaults
+retraining/0 [default6]:    return fn(self, **kwargs)
+retraining/0 [default6]:           ^^^^^^^^^^^^^^^^^^
+retraining/0 [default6]:  File "/usr/local/lib/python3.12/dist-packages/lightning/pytorch/trainer/trainer.py", line 395, in __init__
+retraining/0 [default6]:    self._accelerator_connector = _AcceleratorConnector(
+retraining/0 [default6]:                                  ^^^^^^^^^^^^^^^^^^^^^^
+retraining/0 [default6]:  File "/usr/local/lib/python3.12/dist-packages/lightning/pytorch/trainer/connectors/accelerator_connector.py", line 143, in __init__
+retraining/0 [default6]:    self._accelerator_flag = self._choose_gpu_accelerator_backend()
+retraining/0 [default6]:                             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+retraining/0 [default6]:  File "/usr/local/lib/python3.12/dist-packages/lightning/pytorch/trainer/connectors/accelerator_connector.py", line 353, in _choose_gpu_accelerator_backend
+retraining/0 [default6]:    raise MisconfigurationException("No supported gpu backend found!")
+retraining/0 [default6]:lightning.fabric.utilities.exceptions.MisconfigurationException: No supported gpu backend found!
+retraining/0 [default6]:
+retraining/0 [default6]:Fiddle context: failed to construct or call Trainer at <root>.trainer with positional arguments: (), keyword arguments: (accelerator='gpu', strategy=<nemo.lightning.pytorch.strategies.megatron_strategy.MegatronStrategy object at 0x7ba921e43b60>, devices=8, num_nodes=1, callbacks=[<nemo.utils.exp_manager.TimingCallback object at 0x7ba921e43ce0>, <nemo.lightning.pytorch.callbacks.garbage_collection.GarbageCollectionCallback object at 0x7ba921e43c50>, <nemo.lightning.pytorch.callbacks.megatron_comm_overlap.MegatronCommOverlapCallback object at 0x7ba921e43230>], max_steps=20, limit_val_batches=0, val_check_interval=20, log_every_n_steps=1, enable_checkpointing=False, accumulate_grad_batches=1, use_distributed_sampler=False, plugins=<nemo.lightning.pytorch.plugins.mixed_precision.MegatronMixedPrecision object at 0x7ba921e43c80>).
+retraining/0 [default0]:[NeMo I 2025-10-24 06:33:59 nemo_logging:393] Getting Megatron tokenizer for pretrained model name: megatron-gpt-345m, custom vocab file: None, and merges file: None
+retraining/0 [default0]:[NeMo I 2025-10-24 06:33:59 nemo_logging:393] Getting HuggingFace AutoTokenizer with pretrained_model_name: gpt2, vocab_file: /root/.cache/torch/megatron/megatron-gpt-345m_vocab,  merges_files: /root/.cache/torch/megatron/megatron-gpt-345m_merges, special_tokens_dict: {}, and use_fast: False
+retraining/0 [default2]:Traceback (most recent call last):
+retraining/0 [default2]:  File "<frozen runpy>", line 198, in _run_module_as_main
+retraining/0 [default2]:  File "<frozen runpy>", line 88, in _run_code
+retraining/0 [default2]:  File "/opt/Run/nemo_run/core/runners/fdl_runner.py", line 72, in <module>
+retraining/0 [default2]:    fdl_runner_app()
+retraining/0 [default2]:  File "/usr/local/lib/python3.12/dist-packages/typer/main.py", line 340, in __call__
+retraining/0 [default2]:    raise e
+retraining/0 [default2]:  File "/usr/local/lib/python3.12/dist-packages/typer/main.py", line 323, in __call__
+retraining/0 [default2]:    return get_command(self)(*args, **kwargs)
+retraining/0 [default2]:           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+retraining/0 [default2]:  File "/usr/local/lib/python3.12/dist-packages/click/core.py", line 1161, in __call__
+retraining/0 [default2]:    return self.main(*args, **kwargs)
+retraining/0 [default2]:           ^^^^^^^^^^^^^^^^^^^^^^^^^^
+retraining/0 [default4]:Traceback (most recent call last):
+retraining/0 [default4]:  File "<frozen runpy>", line 198, in _run_module_as_main
+retraining/0 [default4]:  File "<frozen runpy>", line 88, in _run_code
+retraining/0 [default2]:  File "/usr/local/lib/python3.12/dist-packages/typer/core.py", line 677, in main
+retraining/0 [default4]:  File "/opt/Run/nemo_run/core/runners/fdl_runner.py", line 72, in <module>
+retraining/0 [default2]:    return _main(
+retraining/0 [default4]:    fdl_runner_app()
+retraining/0 [default2]:           ^^^^^^
+retraining/0 [default4]:  File "/usr/local/lib/python3.12/dist-packages/typer/main.py", line 340, in __call__
+retraining/0 [default2]:  File "/usr/local/lib/python3.12/dist-packages/typer/core.py", line 195, in _main
+retraining/0 [default4]:    raise e
+retraining/0 [default2]:    rv = self.invoke(ctx)
+retraining/0 [default4]:  File "/usr/local/lib/python3.12/dist-packages/typer/main.py", line 323, in __call__
+retraining/0 [default2]:         ^^^^^^^^^^^^^^^^
+retraining/0 [default4]:    return get_command(self)(*args, **kwargs)
+retraining/0 [default2]:  File "/usr/local/lib/python3.12/dist-packages/click/core.py", line 1443, in invoke
+retraining/0 [default4]:           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+retraining/0 [default2]:    return ctx.invoke(self.callback, **ctx.params)
+retraining/0 [default4]:  File "/usr/local/lib/python3.12/dist-packages/click/core.py", line 1161, in __call__
+retraining/0 [default2]:           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+retraining/0 [default4]:    return self.main(*args, **kwargs)
+retraining/0 [default2]:  File "/usr/local/lib/python3.12/dist-packages/click/core.py", line 788, in invoke
+retraining/0 [default4]:           ^^^^^^^^^^^^^^^^^^^^^^^^^^
+retraining/0 [default2]:    return __callback(*args, **kwargs)
+retraining/0 [default4]:  File "/usr/local/lib/python3.12/dist-packages/typer/core.py", line 677, in main
+retraining/0 [default2]:           ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+retraining/0 [default4]:    return _main(
+retraining/0 [default2]:  File "/usr/local/lib/python3.12/dist-packages/typer/main.py", line 698, in wrapper
+retraining/0 [default4]:           ^^^^^^
+retraining/0 [default2]:    return callback(**use_params)
+retraining/0 [default4]:  File "/usr/local/lib/python3.12/dist-packages/typer/core.py", line 195, in _main
+retraining/0 [default2]:           ^^^^^^^^^^^^^^^^^^^^^^
+retraining/0 [default4]:    rv = self.invoke(ctx)
+retraining/0 [default2]:  File "/opt/Run/nemo_run/core/runners/fdl_runner.py", line 67, in fdl_direct_run
+retraining/0 [default4]:         ^^^^^^^^^^^^^^^^
+retraining/0 [default2]:    fdl_fn = fdl.build(fdl_buildable)
+retraining/0 [default4]:  File "/usr/local/lib/python3.12/dist-packages/click/core.py", line 1443, in invoke
+retraining/0 [default2]:             ^^^^^^^^^^^^^^^^^^^^^^^^
+retraining/0 [default4]:    return ctx.invoke(self.callback, **ctx.params)
+retraining/0 [default2]:  File "/usr/local/lib/python3.12/dist-packages/fiddle/_src/building.py", line 185, in build
+retraining/0 [default4]:           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+retraining/0 [default2]:    result = daglish.MemoizedTraversal.run(_build, buildable)
+retraining/0 [default4]:  File "/usr/local/lib/python3.12/dist-packages/click/core.py", line 788, in invoke
+retraining/0 [default2]:             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+retraining/0 [default4]:    return __callback(*args, **kwargs)
+retraining/0 [default2]:  File "/usr/local/lib/python3.12/dist-packages/fiddle/_src/daglish.py", line 477, in run
+retraining/0 [default4]:           ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+retraining/0 [default2]:    return fn(root_obj, state)
+retraining/0 [default4]:  File "/usr/local/lib/python3.12/dist-packages/typer/main.py", line 698, in wrapper
+retraining/0 [default2]:           ^^^^^^^^^^^^^^^^^^^
+retraining/0 [default4]:    return callback(**use_params)
+retraining/0 [default2]:  File "/usr/local/lib/python3.12/dist-packages/fiddle/_src/building.py", line 176, in _build
+retraining/0 [default4]:           ^^^^^^^^^^^^^^^^^^^^^^
+retraining/0 [default2]:    sub_traversal = state.flattened_map_children(value)
+retraining/0 [default4]:  File "/opt/Run/nemo_run/core/runners/fdl_runner.py", line 67, in fdl_direct_run
+retraining/0 [default2]:                    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+retraining/0 [default4]:    fdl_fn = fdl.build(fdl_buildable)
+retraining/0 [default2]:  File "/usr/local/lib/python3.12/dist-packages/fiddle/_src/daglish.py", line 631, in flattened_map_children
+retraining/0 [default4]:             ^^^^^^^^^^^^^^^^^^^^^^^^
+retraining/0 [default2]:    return self._flattened_map_children(value, node_traverser)
+retraining/0 [default4]:  File "/usr/local/lib/python3.12/dist-packages/fiddle/_src/building.py", line 185, in build
+retraining/0 [default2]:           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+retraining/0 [default4]:    result = daglish.MemoizedTraversal.run(_build, buildable)
+retraining/0 [default2]:  File "/usr/local/lib/python3.12/dist-packages/fiddle/_src/daglish.py", line 580, in _flattened_map_children
+retraining/0 [default4]:             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+retraining/0 [default2]:    self.call(subvalue, path_element)
+retraining/0 [default4]:  File "/usr/local/lib/python3.12/dist-packages/fiddle/_src/daglish.py", line 477, in run
+retraining/0 [default2]:  File "/usr/local/lib/python3.12/dist-packages/fiddle/_src/daglish.py", line 694, in call
+retraining/0 [default4]:    return fn(root_obj, state)
+retraining/0 [default2]:    return self.traversal.apply(value, new_state)
+retraining/0 [default4]:           ^^^^^^^^^^^^^^^^^^^
+retraining/0 [default2]:           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+retraining/0 [default4]:  File "/usr/local/lib/python3.12/dist-packages/fiddle/_src/building.py", line 176, in _build
+retraining/0 [default2]:  File "/usr/local/lib/python3.12/dist-packages/fiddle/_src/daglish.py", line 786, in apply
+retraining/0 [default4]:    sub_traversal = state.flattened_map_children(value)
+retraining/0 [default2]:    result = self.traversal_fn(value, state)
+retraining/0 [default4]:                    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+retraining/0 [default2]:             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+retraining/0 [default4]:  File "/usr/local/lib/python3.12/dist-packages/fiddle/_src/daglish.py", line 631, in flattened_map_children
+retraining/0 [default2]:  File "/usr/local/lib/python3.12/dist-packages/fiddle/_src/building.py", line 180, in _build
+retraining/0 [default4]:    return self._flattened_map_children(value, node_traverser)
+retraining/0 [default2]:    return call_buildable(value, arguments, current_path=state.current_path)
+retraining/0 [default4]:           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+retraining/0 [default2]:           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+retraining/0 [default4]:  File "/usr/local/lib/python3.12/dist-packages/fiddle/_src/daglish.py", line 580, in _flattened_map_children
+retraining/0 [default2]:  File "/usr/local/lib/python3.12/dist-packages/fiddle/_src/building.py", line 119, in call_buildable
+retraining/0 [default4]:    self.call(subvalue, path_element)
+retraining/0 [default2]:    with reraised_exception.try_with_lazy_message(make_message):
+retraining/0 [default4]:  File "/usr/local/lib/python3.12/dist-packages/fiddle/_src/daglish.py", line 694, in call
+retraining/0 [default2]:  File "/usr/lib/python3.12/contextlib.py", line 158, in __exit__
+retraining/0 [default4]:    return self.traversal.apply(value, new_state)
+retraining/0 [default2]:    self.gen.throw(value)
+retraining/0 [default4]:           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+retraining/0 [default2]:  File "/usr/local/lib/python3.12/dist-packages/fiddle/_src/reraised_exception.py", line 82, in try_with_lazy_message
+retraining/0 [default4]:  File "/usr/local/lib/python3.12/dist-packages/fiddle/_src/daglish.py", line 786, in apply
+retraining/0 [default2]:    raise decorate_exception(exc, message) from None
+retraining/0 [default4]:    result = self.traversal_fn(value, state)
+retraining/0 [default2]:  File "/usr/local/lib/python3.12/dist-packages/fiddle/_src/reraised_exception.py", line 74, in try_with_lazy_message
+retraining/0 [default4]:             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+retraining/0 [default2]:    yield
+retraining/0 [default4]:  File "/usr/local/lib/python3.12/dist-packages/fiddle/_src/building.py", line 180, in _build
+retraining/0 [default2]:  File "/usr/local/lib/python3.12/dist-packages/fiddle/_src/building.py", line 120, in call_buildable
+retraining/0 [default4]:    return call_buildable(value, arguments, current_path=state.current_path)
+retraining/0 [default2]:    return buildable.__build__(*args, **kwargs)
+retraining/0 [default4]:           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+retraining/0 [default2]:           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+retraining/0 [default4]:  File "/usr/local/lib/python3.12/dist-packages/fiddle/_src/building.py", line 119, in call_buildable
+retraining/0 [default2]:  File "/usr/local/lib/python3.12/dist-packages/fiddle/_src/config.py", line 783, in __build__
+retraining/0 [default4]:    with reraised_exception.try_with_lazy_message(make_message):
+retraining/0 [default2]:    return self.__fn_or_cls__(*args, **kwargs)
+retraining/0 [default4]:  File "/usr/lib/python3.12/contextlib.py", line 158, in __exit__
+retraining/0 [default2]:           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+retraining/0 [default4]:    self.gen.throw(value)
+retraining/0 [default2]:  File "/opt/NeMo/nemo/lightning/io/mixin.py", line 590, in wrapped_init
+retraining/0 [default4]:  File "/usr/local/lib/python3.12/dist-packages/fiddle/_src/reraised_exception.py", line 82, in try_with_lazy_message
+retraining/0 [default2]:    original_init(self, *args, **kwargs)
+retraining/0 [default4]:    raise decorate_exception(exc, message) from None
+retraining/0 [default2]:  File "/usr/local/lib/python3.12/dist-packages/lightning/pytorch/utilities/argparse.py", line 70, in insert_env_defaults
+retraining/0 [default4]:  File "/usr/local/lib/python3.12/dist-packages/fiddle/_src/reraised_exception.py", line 74, in try_with_lazy_message
+retraining/0 [default2]:    return fn(self, **kwargs)
+retraining/0 [default4]:    yield
+retraining/0 [default2]:           ^^^^^^^^^^^^^^^^^^
+retraining/0 [default4]:  File "/usr/local/lib/python3.12/dist-packages/fiddle/_src/building.py", line 120, in call_buildable
+retraining/0 [default2]:  File "/usr/local/lib/python3.12/dist-packages/lightning/pytorch/trainer/trainer.py", line 395, in __init__
+retraining/0 [default4]:    return buildable.__build__(*args, **kwargs)
+retraining/0 [default2]:    self._accelerator_connector = _AcceleratorConnector(
+retraining/0 [default4]:           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+retraining/0 [default2]:                                  ^^^^^^^^^^^^^^^^^^^^^^
+retraining/0 [default4]:  File "/usr/local/lib/python3.12/dist-packages/fiddle/_src/config.py", line 783, in __build__
+retraining/0 [default2]:  File "/usr/local/lib/python3.12/dist-packages/lightning/pytorch/trainer/connectors/accelerator_connector.py", line 143, in __init__
+retraining/0 [default4]:    return self.__fn_or_cls__(*args, **kwargs)
+retraining/0 [default2]:    self._accelerator_flag = self._choose_gpu_accelerator_backend()
+retraining/0 [default4]:           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+retraining/0 [default2]:                             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+retraining/0 [default4]:  File "/opt/NeMo/nemo/lightning/io/mixin.py", line 590, in wrapped_init
+retraining/0 [default2]:  File "/usr/local/lib/python3.12/dist-packages/lightning/pytorch/trainer/connectors/accelerator_connector.py", line 353, in _choose_gpu_accelerator_backend
+retraining/0 [default4]:    original_init(self, *args, **kwargs)
+retraining/0 [default2]:    raise MisconfigurationException("No supported gpu backend found!")
+retraining/0 [default4]:  File "/usr/local/lib/python3.12/dist-packages/lightning/pytorch/utilities/argparse.py", line 70, in insert_env_defaults
+retraining/0 [default2]:lightning.fabric.utilities.exceptions.MisconfigurationException: No supported gpu backend found!
+retraining/0 [default4]:    return fn(self, **kwargs)
+retraining/0 [default2]:
+retraining/0 [default4]:           ^^^^^^^^^^^^^^^^^^
+retraining/0 [default2]:Fiddle context: failed to construct or call Trainer at <root>.trainer with positional arguments: (), keyword arguments: (accelerator='gpu', strategy=<nemo.lightning.pytorch.strategies.megatron_strategy.MegatronStrategy object at 0x780c17520140>, devices=8, num_nodes=1, callbacks=[<nemo.utils.exp_manager.TimingCallback object at 0x780c17e67bc0>, <nemo.lightning.pytorch.callbacks.garbage_collection.GarbageCollectionCallback object at 0x780c17520050>, <nemo.lightning.pytorch.callbacks.megatron_comm_overlap.MegatronCommOverlapCallback object at 0x780c17520b60>], max_steps=20, limit_val_batches=0, val_check_interval=20, log_every_n_steps=1, enable_checkpointing=False, accumulate_grad_batches=1, use_distributed_sampler=False, plugins=<nemo.lightning.pytorch.plugins.mixed_precision.MegatronMixedPrecision object at 0x780c17e65880>).
+retraining/0 [default4]:  File "/usr/local/lib/python3.12/dist-packages/lightning/pytorch/trainer/trainer.py", line 395, in __init__
+retraining/0 [default4]:    self._accelerator_connector = _AcceleratorConnector(
+retraining/0 [default4]:                                  ^^^^^^^^^^^^^^^^^^^^^^
+retraining/0 [default4]:  File "/usr/local/lib/python3.12/dist-packages/lightning/pytorch/trainer/connectors/accelerator_connector.py", line 143, in __init__
+retraining/0 [default4]:    self._accelerator_flag = self._choose_gpu_accelerator_backend()
+retraining/0 [default4]:                             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+retraining/0 [default4]:  File "/usr/local/lib/python3.12/dist-packages/lightning/pytorch/trainer/connectors/accelerator_connector.py", line 353, in _choose_gpu_accelerator_backend
+retraining/0 [default4]:    raise MisconfigurationException("No supported gpu backend found!")
+retraining/0 [default4]:lightning.fabric.utilities.exceptions.MisconfigurationException: No supported gpu backend found!
+retraining/0 [default4]:
+retraining/0 [default4]:Fiddle context: failed to construct or call Trainer at <root>.trainer with positional arguments: (), keyword arguments: (accelerator='gpu', strategy=<nemo.lightning.pytorch.strategies.megatron_strategy.MegatronStrategy object at 0x75c62bc5bbc0>, devices=8, num_nodes=1, callbacks=[<nemo.utils.exp_manager.TimingCallback object at 0x75c62bc5bd70>, <nemo.lightning.pytorch.callbacks.garbage_collection.GarbageCollectionCallback object at 0x75c62bc5bd10>, <nemo.lightning.pytorch.callbacks.megatron_comm_overlap.MegatronCommOverlapCallback object at 0x75c62bc5bc80>], max_steps=20, limit_val_batches=0, val_check_interval=20, log_every_n_steps=1, enable_checkpointing=False, accumulate_grad_batches=1, use_distributed_sampler=False, plugins=<nemo.lightning.pytorch.plugins.mixed_precision.MegatronMixedPrecision object at 0x75c62bc5be00>).
+retraining/0 W1024 06:34:00.349000 132843 torch/distributed/elastic/multiprocessing/api.py:900] Sending process 132914 closing signal SIGTERM
+retraining/0 W1024 06:34:00.370000 132843 torch/distributed/elastic/multiprocessing/api.py:900] Sending process 132915 closing signal SIGTERM
+retraining/0 W1024 06:34:00.371000 132843 torch/distributed/elastic/multiprocessing/api.py:900] Sending process 132916 closing signal SIGTERM
+retraining/0 W1024 06:34:00.372000 132843 torch/distributed/elastic/multiprocessing/api.py:900] Sending process 132918 closing signal SIGTERM
+retraining/0 W1024 06:34:00.372000 132843 torch/distributed/elastic/multiprocessing/api.py:900] Sending process 132919 closing signal SIGTERM
+retraining/0 W1024 06:34:00.373000 132843 torch/distributed/elastic/multiprocessing/api.py:900] Sending process 132920 closing signal SIGTERM
+retraining/0 W1024 06:34:00.373000 132843 torch/distributed/elastic/multiprocessing/api.py:900] Sending process 132921 closing signal SIGTERM
+retraining/0 E1024 06:34:00.825000 132843 torch/distributed/elastic/multiprocessing/api.py:874] failed (exitcode: 1) local_rank: 3 (pid: 132917) of binary: /usr/bin/python
+retraining/0 I1024 06:34:00.837000 132843 torch/distributed/elastic/multiprocessing/errors/__init__.py:368] ('local_rank %s FAILED with no error file. Decorate your entrypoint fn with @record for traceback info. See: https://pytorch.org/docs/stable/elastic/errors.html', 3)
+retraining/0 Traceback (most recent call last):
+retraining/0   File "/usr/local/bin/torchrun", line 33, in <module>
+retraining/0     sys.exit(load_entry_point('torch==2.8.0a0+5228986c39.nv25.5', 'console_scripts', 'torchrun')())
+retraining/0              ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+retraining/0   File "/usr/local/lib/python3.12/dist-packages/torch/distributed/elastic/multiprocessing/errors/__init__.py", line 355, in wrapper
+retraining/0     return f(*args, **kwargs)
+retraining/0            ^^^^^^^^^^^^^^^^^^
+retraining/0   File "/usr/local/lib/python3.12/dist-packages/torch/distributed/run.py", line 892, in main
+retraining/0     run(args)
+retraining/0   File "/usr/local/lib/python3.12/dist-packages/torch/distributed/run.py", line 883, in run
+retraining/0     elastic_launch(
+retraining/0   File "/usr/local/lib/python3.12/dist-packages/torch/distributed/launcher/api.py", line 139, in __call__
+retraining/0     return launch_agent(self._config, self._entrypoint, list(args))
+retraining/0            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+retraining/0   File "/usr/local/lib/python3.12/dist-packages/torch/distributed/launcher/api.py", line 270, in launch_agent
+retraining/0     raise ChildFailedError(
+retraining/0 torch.distributed.elastic.multiprocessing.errors.ChildFailedError: 
+retraining/0 ============================================================
+retraining/0 nemo_run.core.runners.fdl_runner FAILED
+retraining/0 ------------------------------------------------------------
+retraining/0 Failures:
+retraining/0   <NO_OTHER_FAILURES>
+retraining/0 ------------------------------------------------------------
+retraining/0 Root Cause (first observed failure):
+retraining/0 [0]:
+retraining/0   time      : 2025-10-24_06:34:00
+retraining/0   host      : cc76e080f006
+retraining/0   rank      : 3 (local_rank: 3)
+retraining/0   exitcode  : 1 (pid: 132917)
+retraining/0   error_file: <N/A>
+retraining/0   traceback : To enable traceback see: https://pytorch.org/docs/stable/elastic/errors.html
+retraining/0 ============================================================
+[06:34:02] INFO     Job mistral_7b_pretraining-wtp0bn62fnbd finished: FAILED             launcher.py:161
+                                                                                                        
+# The experiment was run with the following tasks: ['mistral_7b_pretraining']                           
+# You can inspect and reconstruct this experiment at a later point in time using:                       
+experiment = run.Experiment.from_id("mistral_7b_pretraining_1761287615")                                
+experiment.status() # Gets the overall status                                                           
+experiment.logs("mistral_7b_pretraining") # Gets the log for the provided task                          
+experiment.cancel("mistral_7b_pretraining") # Cancels the provided task if still running                
+                                                                                                        
+                                                                                                        
+# You can inspect this experiment at a later point in time using the CLI as well:                       
+nemo experiment status mistral_7b_pretraining_1761287615                                                
+nemo experiment logs mistral_7b_pretraining_1761287615 0                                                
+nemo experiment cancel mistral_7b_pretraining_1761287615 0                                              
+                                                                                                        

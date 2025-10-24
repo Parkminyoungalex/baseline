@@ -31,7 +31,7 @@ def model(recompute_method) -> run.Config[pl.LightningModule]:
         init_model_with_meta_device=False,
         use_transformer_engine_full_layer_spec=False,
         share_embeddings_and_output_weights=True,
-        deallocate_pipeline_outputs=True,
+        deallocate_pipeline_outputs=False,
         recompute_method=recompute_method
     )
     return run.Config(MistralModel, config=config)
@@ -171,7 +171,7 @@ def pretrain_performance_optimizations(recipe: run.Partial) -> run.Partial:
     mcomm_overlap_callback = run.Config(
         MegatronCommOverlapCallback,
         tp_comm_overlap=False,
-        tp_comm_overlap_cfg=userbuffers_a100,
+#        tp_comm_overlap_cfg=userbuffers_a100,
 #        overlap_p2p_comm=True,
 #        batch_p2p_comm=False,
         defer_embedding_wgrad_compute=True,
@@ -196,6 +196,8 @@ def local_executor_torchrun(nodes: int = 1, devices: int = 4) -> run.LocalExecut
     env_vars = {
         "TORCH_NCCL_AVOID_RECORD_STREAMS": "1",
         "NCCL_NVLS_ENABLE": "0",
+        "NVTE_DP_AMAX_REDUCE_INTERVAL": "0",
+        "NVTE_ASYNC_AMAX_REDUCTION": "1",
     }
 
     executor = run.LocalExecutor(ntasks_per_node=devices, launcher="torchrun", env_vars=env_vars)
@@ -203,7 +205,7 @@ def local_executor_torchrun(nodes: int = 1, devices: int = 4) -> run.LocalExecut
     return executor
 
 def run_pretraining(args):
-    num_gpus_per_node = 4
+    num_gpus_per_node = 8
     recipe = pretrain_recipe(
         global_batch_size=args.global_batch_size,
         micro_batch_size=args.micro_batch_size,
@@ -233,14 +235,16 @@ if __name__ == "__main__":
     parser.add_argument("--cp", type=int, default=1, help="Context parallelism size")
     parser.add_argument("--rc", action="store_true", help="Enable activation recomputation")
     parser.add_argument("--fsdp", action="store_true", help="Enable fsdp")
-    parser.add_argument("--micro_batch_size", type=int, default=1, help="Micro batch size")
-    parser.add_argument("--global_batch_size", type=int, default=4, help="Global batch size")
-    parser.add_argument("--num_gpus_per_node", type=int, default=4, help="Number of GPU")
+    parser.add_argument("--mbs", type=int, default=1, help="Micro batch size")
+    parser.add_argument("--gbs", type=int, default=4, help="Global batch size")
+    parser.add_argument("--num_gpus_per_node", type=int, default=8, help="Number of GPU")
 
     args = parser.parse_args()
     args.recompute_method = "full" if args.rc else None
     args.is_fsdp = args.fsdp
     args.dp = int(args.num_gpus_per_node / args.tp / args.pp / max(args.cp, 1))
+    args.micro_batch_size = args.mbs
+    args.global_batch_size = args.mbs * args.dp
 
     print("\n=== Parallel Configuration Summary ===")
     print(f"DP:                        {args.dp} {'(FSDP Enabled)' if args.is_fsdp else ''}")
