@@ -184,7 +184,6 @@ def local_executor_torchrun(nodes: int = 1, devices: int = 4) -> run.LocalExecut
     return executor
 
 def run_pretraining(args):
-    num_gpus_per_node = 8
     recipe = pretrain_recipe(
         global_batch_size=args.global_batch_size,
         micro_batch_size=args.micro_batch_size,
@@ -194,7 +193,7 @@ def run_pretraining(args):
         virtual_pipeline_parallelism=args.vp,
         sequence_parallelism=args.sp,
         num_nodes=1,
-        num_gpus_per_node=num_gpus_per_node,
+        num_gpus_per_node=args.num_gpus_per_node,
         max_steps=20,
     )
 
@@ -215,7 +214,7 @@ if __name__ == "__main__":
     parser.add_argument("--fsdp", action="store_true", help="Enable fsdp")
     parser.add_argument("--mbs", type=int, default=1, help="Micro batch size")
     parser.add_argument("--gbs", type=int, default=4, help="Global batch size")
-    parser.add_argument("--num_gpus_per_node", type=int, default=8, help="Number of GPU")
+    parser.add_argument("--num_gpus_per_node", type=int, default=4, help="Number of GPU")
 
     args = parser.parse_args()
     args.recompute_method = "full" if args.rc else None
